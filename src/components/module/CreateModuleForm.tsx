@@ -1,7 +1,9 @@
-import React from "react";
-import {useFieldArray, useForm} from "react-hook-form";
-import {moduleService} from "../../services/module.service";
-import {ICreateModule} from "../../types/module.types";
+import React, {useState} from "react"
+import {useForm} from "react-hook-form"
+import {moduleService} from "../../services/module.service"
+import {ICreateModule} from "../../types/module.types"
+import {getUser} from "../../services/auth-token.services"
+import {fileService} from "../../services/file.service"
 
 interface CreateModuleFormProps {
     onClose: () => void
@@ -9,25 +11,41 @@ interface CreateModuleFormProps {
 }
 
 export function CreateModuleForm({onClose, courseId}: CreateModuleFormProps) {
-    const {register, handleSubmit, formState: {errors}, reset, control} = useForm<ICreateModule>({
-        mode: 'onChange'
-    });
+    const [files, setFiles] = useState<File[]>([])
+    const user = getUser()
 
-    const {fields, append, remove} = useFieldArray({
-        control,
-        name: "attachments"
-    });
+    const {register, handleSubmit, formState: {errors}, reset} = useForm<ICreateModule>({
+        mode: 'onChange'
+    })
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files
+        if (files) {
+            setFiles(Array.from(files))
+        }
+    }
 
     const onSubmit = async (data: ICreateModule) => {
         try {
-            const response = await moduleService.create(data, courseId);
-            reset();
-            onClose();
-            window.location.reload();
+            data.fileIds = []
+            if (files.length > 0) {
+                const formData = new FormData()
+                files.forEach(file => formData.append('files', file))
+                const userId = user && user.id ? user.id : 0
+                const response = await fileService.uploadList(formData, userId)
+                response.forEach(file => data.fileIds.push(file.id))
+            }
+
+            // todo kludge
+            data.attachments[0].attachmentType = 'TEXT'
+            const response = await moduleService.create(data, courseId)
+            reset()
+            onClose()
+            window.location.reload()
         } catch (error) {
-            console.error('Failed to create module:', error);
+            console.error('Failed to create module:', error)
         }
-    };
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -43,38 +61,33 @@ export function CreateModuleForm({onClose, courseId}: CreateModuleFormProps) {
                 <div className="text-red-600 text-sm">{errors.title.message}</div>
             )}
 
-            {fields.map((field, index) => (
-                <div key={field.id} className="mt-4">
-                    <select
-                        className="border py-2 px-4 mt-2 w-full outline-0 rounded"
-                        {...register(`attachments.${index}.attachmentType`, {
-                            required: 'Select attachment type'
-                        })}
-                    >
-                        <option className="text-gray-400 opacity-75" value="">Select attachment type</option>
-                        <option value="TEXT">Text</option>
-                        {/*<option value="IMAGE">Image</option>*/}
-                        {/*<option value="DOCUMENT">Document</option>*/}
-                    </select>
+            <textarea
+                className="border py-2 px-4 mt-4 w-full outline-0 resize-none h-40"
+                placeholder="Text"
+                {...register('attachments.0.attachmentText', {
+                    required: 'Fill in the text'
+                })}
+            />
+            {(errors.attachments && errors.attachments[0]?.attachmentText) && (
+                <div className="text-red-600 text-sm">{errors.attachments[0].attachmentText.message}</div>
+            )}
 
-                    <input
-                        type="text"
-                        className="border py-2 px-4 mt-2 w-full outline-0"
-                        placeholder="Attachment Text"
-                        {...register(`attachments.${index}.attachmentText`, {
-                            required: 'Fill in the attachment text'
-                        })}
-                    />
-                    <button type="button" className="py-2 px-4 mt-2 bg-red-500 text-white rounded hover:bg-red-600"
-                            onClick={() => remove(index)}>
-                        Remove Attachment
-                    </button>
+
+            <label htmlFor="files" className="block mb-1 mt-4 font-bold text-gray-700">
+                Select files to upload:
+            </label>
+            <input
+                type="file"
+                className="appearance-none w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                onChange={handleFileChange}
+                multiple
+            />
+            {/* Display selected files */}
+            {files.map((file, index) => (
+                <div key={index} className="mt-2">
+                    {file.name}
                 </div>
             ))}
-            <button type="button" className="py-2 px-4 mt-2 bg-blue-400 text-white rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-                    onClick={() => append({attachmentType: '', attachmentText: ''})}>
-                Add Attachment
-            </button>
 
             <div className="flex justify-center mt-4">
                 <button type="submit" className="py-2 bg-green-500 hover:bg-green-700 text-white px-4 border">
@@ -82,5 +95,5 @@ export function CreateModuleForm({onClose, courseId}: CreateModuleFormProps) {
                 </button>
             </div>
         </form>
-    );
+    )
 }

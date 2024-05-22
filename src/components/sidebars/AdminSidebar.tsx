@@ -23,7 +23,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({isOpen, toggleSidebar}) => {
                         <SidebarElement clickAction={toggleSidebar} route={ROUTES.COURSE_MANAGEMENT} value={'All courses'}
                                         icon={<FaGraduationCap className="mr-2 size-8"/>}/>
 
-                        <SidebarElement clickAction={toggleSidebar} route={'#'} value={'Users'}
+                        <SidebarElement clickAction={toggleSidebar} route={ROUTES.USER_MANAGEMENT} value={'Users'}
                                         icon={<FaUser className="mr-2 size-8"/>}/>
                     </ul>
                 </div>

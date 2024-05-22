@@ -10,5 +10,15 @@ export const moduleService = {
         })
 
         return response.data
+    },
+
+    async delete(id: number, courseId: number) {
+        const response = await axiosWithAuth.delete('/course/module/' + id, {
+            params: {
+                courseId: courseId
+            }
+        })
+
+        return response.data
     }
 }

@@ -1,22 +1,25 @@
+import {ICreateSubmissionBox, IFullSubmissionBox, ISubmissionBox} from "../types/submission.types";
 import {axiosWithAuth} from "../api/interceptors";
 
-export const submissionService = {
-    async create(module: ICreateModule, courseId: number) {
-        const response = await axiosWithAuth.post<IModule>('/course/module/create', module, {
+export const submissionBoxService = {
+    async get(id: number) {
+        const response = await axiosWithAuth.get<IFullSubmissionBox>('course/submission-box/' + id)
+
+        return response.data
+    },
+
+    async create(box: ICreateSubmissionBox, moduleId: number) {
+        const response = await axiosWithAuth.post<ISubmissionBox>('/course/submission-box/create', box, {
             params: {
-                courseId: courseId
+                moduleId: moduleId
             }
         })
 
         return response.data
     },
 
-    async delete(id: number, courseId: number) {
-        const response = await axiosWithAuth.delete('/course/module/' + id, {
-            params: {
-                courseId: courseId
-            }
-        })
+    async delete(id: number) {
+        const response = await axiosWithAuth.delete('/course/submission-box/' + id)
 
         return response.data
     }

@@ -18,6 +18,13 @@ export interface IUser {
     courseIds: number[]
 }
 
+export interface ICreateUser {
+    name: string
+    email: string
+    password: string
+    role: string
+}
+
 export interface IAuthResponse {
     user: IUser
     tokenType: string
