@@ -10,6 +10,7 @@ class ROUTE {
     COURSE_PAGE_WITH_PARAM = `${this.root}/course/:courseId`
 
     COURSE_MANAGEMENT = `${this.root}/course-management`
+    USER_MANAGEMENT = `${this.root}/user-management`
 }
 
 export const ROUTES = new ROUTE()

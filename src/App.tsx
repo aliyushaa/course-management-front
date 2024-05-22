@@ -15,6 +15,7 @@ import {observer} from "mobx-react-lite";
 import Sidebar from "./components/sidebars/Sidebar";
 import CourseManagementPage from "./pages/admin/CourseManagementPage";
 import {UserRoles} from "./types/auth.types";
+import UserManagementPage from "./pages/admin/UserManagementPage";
 
 const unsecuredRoutes = [ROUTES.HOME, ROUTES.LOGIN]
 const adminRoutes = [ROUTES.COURSE_MANAGEMENT]
@@ -63,6 +64,7 @@ export default observer(function App() {
                     <Route path={ROUTES.COURSE_LIST} element={<CoursesListPage/>}/>
                     <Route path={ROUTES.COURSE_PAGE_WITH_PARAM} element={<CoursePage/>}/>
                     <Route path={ROUTES.COURSE_MANAGEMENT} element={<CourseManagementPage/>}/>
+                    <Route path={ROUTES.USER_MANAGEMENT} element={<UserManagementPage/>}/>
 
                     <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage/>}/>
                     <Route path='*' element={<NotFoundPage/>}/>

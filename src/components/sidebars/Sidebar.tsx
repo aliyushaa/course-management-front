@@ -13,7 +13,12 @@ export default observer(function Sidebar() {
         setIsOpen(!isOpen)
     }
 
-    if (!context.store.isAuth) return <></>
-    if (context.store.user.roles.includes(UserRoles.ADMIN)) return <AdminSidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
-    else return <StudentSidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+    if (!context.store.isAuth)
+        return <></>
+
+    if (context.store.user.roles.includes(UserRoles.ADMIN))
+        return <AdminSidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+
+    else
+        return <StudentSidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
 })
