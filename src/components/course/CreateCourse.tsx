@@ -20,7 +20,7 @@ export function CreateCourse({onClose}: CreateCourseProps) {
     useEffect(() => {
         async function fetchInstructors() {
             try {
-                const response = await userService.getAllUsers([UserRoles.ADMIN]);
+                const response = await userService.getAllUsers([UserRoles.TEACHER]);
                 setInstructors(response.list)
             } catch (e) {
                 console.log(e)

@@ -24,14 +24,21 @@ export interface ICreateSubmissionBox {
 export interface ISubmission {
     id: number
     uploadedBy: IUser
+    comment: string
     files: IFile[]
     uploadDate: Date
     updateDate: Date
-    //todo enum
     status: string
 }
 
 export interface ICreateSubmission {
     uploadedById: number
+    comment: string
+    fileIds: number[]
+}
+
+export interface IUpdateSubmission {
+    uploadedById: number
+    comment: string
     fileIds: number[]
 }

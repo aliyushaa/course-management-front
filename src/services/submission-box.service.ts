@@ -8,6 +8,12 @@ export const submissionBoxService = {
         return response.data
     },
 
+    async getShortInfo(id: number) {
+        const response = await axiosWithAuth.get<ISubmissionBox>('course/submission-box/' + id + '/short')
+
+        return response.data
+    },
+
     async create(box: ICreateSubmissionBox, moduleId: number) {
         const response = await axiosWithAuth.post<ISubmissionBox>('/course/submission-box/create', box, {
             params: {
