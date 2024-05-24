@@ -3,15 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/interceptors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/interceptors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course/CreateCourse.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course/CreateCourse.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/pages-url.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/pages-url.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/CoursePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CoursePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/SubmissionsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SubmissionsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/submission-box.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/submission-box.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/submission.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/submission.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/submission.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/submission.types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +57,7 @@
       <workItem from="1716457013656" duration="10495000" />
       <workItem from="1716486375449" duration="6155000" />
       <workItem from="1716525748053" duration="8087000" />
-      <workItem from="1716541847884" duration="6069000" />
+      <workItem from="1716541847884" duration="7255000" />
     </task>
     <servers />
   </component>
