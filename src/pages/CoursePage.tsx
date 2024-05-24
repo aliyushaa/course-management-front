@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useParams} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 import {ICourseResponse} from "../types/course.types"
 import {courseService} from "../services/course.service"
 import {CreateModuleForm} from "../components/module/CreateModuleForm"
@@ -13,6 +13,7 @@ import {MdAssignment, MdOutlineAddToPhotos, MdOutlineFolderZip} from "react-icon
 import {CiFileOn, CiImageOn} from "react-icons/ci";
 import {BsFiletypeTxt} from "react-icons/bs";
 import {CreateSubmissionBoxForm} from "../components/submission/CreateSubmissionBoxForm";
+import {ROUTES} from "../config/pages-url.config";
 
 const getFileIcon = (fileName: string) => {
     const extension = fileName.split('.').pop()?.toLowerCase()
@@ -189,10 +190,15 @@ export default function CoursePage() {
                                         <hr className='mt-4 mb-4'/>
                                         <ul className="list-disc">
                                             {module.submissionBoxes.map((box) => (
-                                                <li key={box.id} className="mb-2 flex items-center hover:underline hover:cursor-pointer">
-                                                    <MdAssignment className="mr-2 size-5"/>
-                                                    <span className='text-sm'>{box.title}</span>
-                                                </li>
+                                                <Link to={`${ROUTES.SUBMISSIONS_PAGE}/${box.id}`}
+                                                      key={box.id}
+                                                      state={{course: course}}>
+                                                    <li key={box.id}
+                                                        className="mb-2 flex items-center hover:underline hover:cursor-pointer">
+                                                        <MdAssignment className="mr-2 size-5"/>
+                                                        <span className='text-sm'>{box.title}</span>
+                                                    </li>
+                                                </Link>
                                             ))}
                                         </ul>
                                     </>
