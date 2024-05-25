@@ -27,8 +27,6 @@ export const getUser = () => {
 
 export const saveTokenStorage = (token: string, type: EnumTokens) => {
     Cookies.set(type, token, {
-        domain: 'localhost',
-        sameSite: 'strict',
         expires: 2
     })
 }
