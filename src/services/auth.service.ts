@@ -7,8 +7,6 @@ import Cookies from "js-cookie";
 
 function saveUserToStorage(user: IUser) {
     Cookies.set("user", JSON.stringify(user), {
-        domain: 'localhost',
-        sameSite: 'strict',
         expires: 2
     })
 }

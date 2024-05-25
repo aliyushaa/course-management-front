@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/auth-token.services.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth-token.services.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,12 +59,26 @@
       <workItem from="1716457013656" duration="10495000" />
       <workItem from="1716486375449" duration="6155000" />
       <workItem from="1716525748053" duration="8087000" />
-      <workItem from="1716541847884" duration="7255000" />
+      <workItem from="1716541847884" duration="8599000" />
+      <workItem from="1716580033790" duration="618000" />
+      <workItem from="1716632330997" duration="62000" />
+      <workItem from="1716632586129" duration="51000" />
+      <workItem from="1716633054156" duration="1536000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
