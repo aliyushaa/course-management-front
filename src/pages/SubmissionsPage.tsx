@@ -9,6 +9,8 @@ import {UserRoles} from "../types/auth.types"
 import {submissionService} from "../services/submission.service"
 import {getUser} from "../services/auth-token.services"
 import {useForm} from "react-hook-form";
+import {FaEdit} from "react-icons/fa";
+import {GradeForm} from "../components/submission/GradeForm";
 
 interface LocationState {
     course: ICourseResponse
@@ -23,6 +25,8 @@ export function SubmissionsPage() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([])
     const [found, setFound] = useState(false)
     const [isTimeUp, setIsTimeUp] = useState(false)
+    const [gradeFormIsOpened, setGradeFormIsOpened] = useState(false)
+
     const params = useParams<{ boxId: string }>()
     const location = useLocation()
     const {course} = (location.state as LocationState) || {}
@@ -243,32 +247,78 @@ export function SubmissionsPage() {
                                 <p className="text-gray-700 mt-4">{submissionBox.description}</p>
                             </div>
                             {submissionBox.submissions.map((submission) => (
-                                <div key={submission.id} className="bg-gray-50 p-4 mb-4 rounded-md shadow-inner">
-                                    <div className="flex justify-between items-center mb-2">
-                                        <div>
-                                            <p className="text-sm pl-1 font-bold">Uploaded
-                                                by: {submission.uploadedBy.name}</p>
-                                            <p className="text-sm pl-1 font-bold">
-                                                Uploaded at: {new Date(submission.uploadDate).toLocaleString()}
-                                            </p>
-                                            <p className={`text-sm rounded p-1 font-bold ${getStatusClass(submission.status)}`}>
-                                                Last modified: {new Date(submission.updateDate).toLocaleString()}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p className="text-gray-700 mb-2 text-sm">{submission.comment}</p>
+                                <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mb-5 mt-6">
+                                    <div className="border-b-2 pb-4 mb-4 text-sm font-bold">
+                                        <h2 className="text-2xl mb-2">{submission.uploadedBy.name}</h2>
+                                        <p className="text-gray-700 mb-2">Upload
+                                            date: {new Date(submission.uploadDate).toLocaleString()}</p>
 
-                                    <hr className='border-black'/>
-                                    <div className="flex flex-wrap">
-                                        {submission.files.map((file) => (
-                                            <a
-                                                key={file.id}
-                                                className="mr-2 mb-2 mt-2 text-blue-500 hover:opacity-60 underline cursor-pointer"
-                                                onClick={() => downloadFileHandler(file.id, file.originalName)}
-                                            >
-                                                <p className="text-sm">{file.originalName}</p>
-                                            </a>
-                                        ))}
+                                        <p className="text-gray-700 mb-2">Last
+                                            modified: {new Date(submission.updateDate).toLocaleString()}</p>
+
+                                        <p className={`p-2 rounded ${getStatusClass(submission.status)}`}>
+                                            Status: {getStatusName(submission.status)}</p>
+
+                                        {submission.grade === null ?
+                                            // HAS GRADE
+                                            <>
+                                                <div
+                                                    className="flex rounded items-center justify-between mt-1 p-1 bg-yellow-50">
+                                                    <p className="font-bold text-sm">
+                                                        Grading status: not graded
+                                                    </p>
+                                                    <FaEdit
+                                                        onClick={() => setGradeFormIsOpened(prevState => !prevState)}
+                                                        className="size-5 text-red-500 cursor-pointer hover:text-red-600"/>
+                                                </div>
+                                                {gradeFormIsOpened && <GradeForm submissionId={submission.id}/>}
+                                            </>
+                                            :
+                                            // WITHOUT GRADE
+                                            <>
+                                                <div
+                                                    className="flex items-center justify-between mt-1 mb-1 p-1 bg-yellow-50">
+                                                    <p className="text-sm font-bold">
+                                                        Grade: {submission.grade.grade}
+                                                    </p>
+                                                    <FaEdit
+                                                        onClick={() => setGradeFormIsOpened(prevState => !prevState)}
+                                                        className="size-5 text-red-500 cursor-pointer hover:text-red-600"/>
+                                                </div>
+
+                                                {submission.grade.comment &&
+                                                    <p className="text-sm pl-1 font-bold">
+                                                        Feedback: {submission.grade.comment}
+                                                    </p>
+                                                }
+
+                                                {gradeFormIsOpened && <GradeForm submissionId={submission.id}
+                                                                                 grade={submission.grade}/>}
+                                            </>
+                                        }
+                                    </div>
+
+                                    <div className="text-sm">
+                                        {submission.comment &&
+                                            <>
+                                                <h3 className="text-xl font-bold mb-2">Comments</h3>
+                                                <p className="text-gray-700 mb-4">{submission.comment}</p>
+                                            </>
+                                        }
+
+                                        <h3 className="text-xl font-bold mb-2">Files</h3>
+                                        <ul>
+                                            {submission.files.map(file => (
+                                                <li key={file.id} className="mb-2 text-sm">
+                                                    <a
+                                                        key={file.id}
+                                                        className="mr-2 mb-2 mt-2 text-blue-500 hover:opacity-60 underline cursor-pointer"
+                                                        onClick={() => downloadFileHandler(file.id, file.originalName)}>
+                                                        {file.originalName}
+                                                    </a>(Uploaded: {new Date(file.uploadDate).toLocaleString()})
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
                                 </div>
                             ))}
@@ -361,14 +411,38 @@ export function SubmissionsPage() {
                     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mb-40 mt-6">
                         <div className="border-b-2 pb-4 mb-4 text-sm font-bold">
                             <h2 className="text-2xl mb-2">Your submission</h2>
-                            <p className="text-gray-700 mb-2">Upload
+                            <p className="ml-2 text-gray-700 mb-2">Upload
                                 date: {new Date(studentSubmission.uploadDate).toLocaleString()}</p>
 
-                            <p className="text-gray-700 mb-2">Last
+                            <p className="ml-2 text-gray-700 mb-2">Last
                                 modified: {new Date(studentSubmission.updateDate).toLocaleString()}</p>
 
                             <p className={`p-2 rounded ${getStatusClass(studentSubmission.status)}`}>
                                 Status: {getStatusName(studentSubmission.status)}</p>
+
+                            {studentSubmission.grade != null ?
+                                <>
+                                    <p className='mt-1 p-2 rounded bg-green-100 text-green-800'>
+                                        Grading status: graded
+                                    </p>
+                                    <p className="ml-2 text-gray-700 mt-2">
+                                        Grade: {studentSubmission.grade.grade}
+                                    </p>
+                                    {studentSubmission.grade.comment &&
+                                        <p className="ml-2 text-gray-700 mt-2">
+                                            Feedback: {studentSubmission.grade.comment}
+                                        </p>
+                                    }
+                                    <p className="ml-2 text-gray-700 mt-2">
+                                        Graded at: {new Date(studentSubmission.grade.gradedDate).toLocaleString()}
+                                    </p>
+                                </>
+                                :
+                                <p className='mt-1 p-2 rounded bg-gray-100 text-gray-800'>
+                                    Grading status: not graded
+                                </p>
+                            }
+
                         </div>
 
                         <div className="text-sm">

@@ -1,4 +1,4 @@
-import {ICreateSubmission, ISubmission, IUpdateSubmission} from "../types/submission.types";
+import {ICreateGrade, ICreateSubmission, ISubmission, IUpdateSubmission} from "../types/submission.types";
 import {axiosWithAuth} from "../api/interceptors";
 
 export const submissionService = {
@@ -19,6 +19,12 @@ export const submissionService = {
                 submissionBoxId: submissionBoxId,
             }
         })
+
+        return response.data
+    },
+
+    async setGrade(grade: ICreateGrade, submissionId: number) {
+        const response = await axiosWithAuth.put<ISubmission>('/course/submission/' + submissionId + '/grade', grade)
 
         return response.data
     },

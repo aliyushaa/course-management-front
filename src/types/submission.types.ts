@@ -10,7 +10,7 @@ export interface ISubmissionBox {
     dueDate: Date
 }
 
-export interface IFullSubmissionBox extends ISubmissionBox{
+export interface IFullSubmissionBox extends ISubmissionBox {
     submissions: ISubmission[]
 }
 
@@ -29,6 +29,7 @@ export interface ISubmission {
     uploadDate: Date
     updateDate: Date
     status: string
+    grade: IGrade
 }
 
 export interface ICreateSubmission {
@@ -41,4 +42,17 @@ export interface IUpdateSubmission {
     uploadedById: number
     comment: string
     fileIds: number[]
+}
+
+export interface IGrade {
+    id: number
+    grade: number
+    comment: string
+    gradedDate: Date
+}
+
+export interface ICreateGrade {
+    grade: number
+    comment: string
+    gradedById: number
 }
