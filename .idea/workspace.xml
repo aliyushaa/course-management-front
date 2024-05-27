@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/submission/GradeForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/sections/CreateBlogForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/blog.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/blog.types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/interceptors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/interceptors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/SubmissionsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SubmissionsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/submission.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/submission.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/submission.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/submission.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/sections/BlogSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sections/BlogSection.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +72,12 @@
       <workItem from="1716642108215" duration="23000" />
       <workItem from="1716645153337" duration="2263000" />
       <workItem from="1716657840907" duration="9314000" />
+      <workItem from="1716672114347" duration="69000" />
+      <workItem from="1716711322968" duration="566000" />
+      <workItem from="1716722180014" duration="7942000" />
+      <workItem from="1716782305295" duration="5645000" />
+      <workItem from="1716800326492" duration="7000" />
+      <workItem from="1716830482780" duration="3605000" />
     </task>
     <servers />
   </component>
