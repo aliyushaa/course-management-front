@@ -1,51 +1,77 @@
-import React from 'react';
-
-interface BlogPost {
-    id: number;
-    title: string;
-    content: string;
-    createDate: string;
-}
-
-const mockBlogPosts: BlogPost[] = [
-    {
-        id: 1,
-        title: 'Post Title 1',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget finibus velit.',
-        createDate: '2024-04-25'
-    },
-    {
-        id: 2,
-        title: 'Post Title 2',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget finibus velit.',
-        createDate: '2024-04-24'
-    },
-    {
-        id: 3,
-        title: 'Post Title 3',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget finibus velit.',
-        createDate: '2024-04-23'
-    }
-];
+import React, {useEffect, useState} from 'react'
+import {containsRole} from "../../App";
+import {UserRoles} from "../../types/auth.types";
+import {CiSquarePlus} from "react-icons/ci";
+import {Modal} from "../Modal";
+import {CreateBlogForm} from "./CreateBlogForm";
+import {FaTrash} from "react-icons/fa";
+import {blogService} from "../../services/blog.service";
+import {IBlog} from "../../types/blog.types";
 
 const BlogSection: React.FC = () => {
-    const blogPosts: BlogPost[] = mockBlogPosts;
+    const [blogs, setBlogs] = useState<IBlog[] | null>(null)
+    const [createModal, setCreateModal] = useState(false)
+
+    useEffect(() => {
+        async function fetchBlogs() {
+            try {
+                const blogs = await blogService.get()
+                setBlogs(blogs)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+        fetchBlogs()
+    }, [])
+
+    async function deleteHandler(id: number) {
+        try {
+            await blogService.delete(id)
+            window.location.reload()
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     return (
-        <div className="mt-8">
-            <h2 className="text-2xl font-semibold mb-4">Latest Blog Posts</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {blogPosts.map((post: BlogPost) => (
-                    <div key={post.id} className="bg-white shadow-md rounded-lg p-6">
-                        <h3 className="text-lg font-semibold mb-2">{post.title}</h3>
-                        <p className="text-gray-600 mb-4">{post.content}</p>
-                        <p className="text-gray-400">Created on: {post.createDate}</p>
-                        <a href="#" className="text-blue-500 hover:underline mt-2 inline-block">Read More</a>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-};
 
-export default BlogSection;
+        <div className="container mx-auto p-4">
+            {(containsRole(UserRoles.ADMIN) || containsRole(UserRoles.TEACHER)) &&
+                <div className="flex justify-end">
+                    <button onClick={() => setCreateModal(true)} className="text-gray-800 hover:text-gray-400">
+                        <CiSquarePlus size={30}/>
+                    </button>
+                </div>
+            }
+            {createModal &&
+                <Modal title='Create blog' onClose={() => setCreateModal(false)}>
+                    <CreateBlogForm/>
+                </Modal>
+            }
+
+            {blogs && blogs.length > 0 ? (
+                blogs.map((blog, index) => (
+                    <div key={index} className="bg-white shadow-md rounded-lg p-6 mb-4">
+                        <h2 className="text-2xl font-bold mb-2">{blog.title}</h2>
+                        <p className="text-gray-600 text-sm mb-2">{`By ${blog.author} - ${new Date(blog.date).toLocaleString()}`}</p>
+                        <p className="text-gray-800">{blog.summary}</p>
+
+                        {(containsRole(UserRoles.ADMIN) || containsRole(UserRoles.TEACHER)) &&
+                            <div className="flex justify-end">
+                                <button onClick={() => deleteHandler(blog.id)}
+                                        className="text-red-500 hover:text-red-800">
+                                    <FaTrash size={17}/>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                ))
+            ) : (
+                <p className="text-xl text-center text-gray-600">No blogs found or created</p>
+            )}
+        </div>
+    )
+}
+
+export default BlogSection
