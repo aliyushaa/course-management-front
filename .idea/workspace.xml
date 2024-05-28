@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/sections/CreateBlogForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/blog.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/blog.types.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/AdminNavbar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/StudentNavbar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/TeacherNavbar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/interceptors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/interceptors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/sections/BlogSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sections/BlogSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/sidebars/SidebarElement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sidebars/SidebarElement.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,14 +38,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="ts.external.directory.path" value="C:\Users\aldia\Desktop\front projects\course-management-front\node_modules\typescript\lib" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "node.js.selected.package.tslint": "(autodetect)",
+    "ts.external.directory.path": "C:\\diploma-front\\node_modules\\typescript\\lib"
+  }
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
