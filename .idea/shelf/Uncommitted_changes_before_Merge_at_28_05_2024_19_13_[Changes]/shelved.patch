@@ -1,0 +1,195 @@
+Index: src/components/sections/BlogSection.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\r\n\r\ninterface BlogPost {\r\n    id: number;\r\n    title: string;\r\n    content: string;\r\n    createDate: string;\r\n}\r\n\r\nconst mockBlogPosts: BlogPost[] = [\r\n    {\r\n        id: 1,\r\n        title: 'Post Title 1',\r\n        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget finibus velit.',\r\n        createDate: '2024-04-25'\r\n    },\r\n    {\r\n        id: 2,\r\n        title: 'Post Title 2',\r\n        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget finibus velit.',\r\n        createDate: '2024-04-24'\r\n    },\r\n    {\r\n        id: 3,\r\n        title: 'Post Title 3',\r\n        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget finibus velit.',\r\n        createDate: '2024-04-23'\r\n    }\r\n];\r\n\r\nconst BlogSection: React.FC = () => {\r\n    const blogPosts: BlogPost[] = mockBlogPosts;\r\n\r\n    return (\r\n        <div className=\"mt-8\">\r\n            <h2 className=\"text-2xl font-semibold mb-4\">Latest Blog Posts</h2>\r\n            <div className=\"grid grid-cols-1 lg:grid-cols-3 gap-6\">\r\n                {blogPosts.map((post: BlogPost) => (\r\n                    <div key={post.id} className=\"bg-white shadow-md rounded-lg p-6\">\r\n                        <h3 className=\"text-lg font-semibold mb-2\">{post.title}</h3>\r\n                        <p className=\"text-gray-600 mb-4\">{post.content}</p>\r\n                        <p className=\"text-gray-400\">Created on: {post.createDate}</p>\r\n                        <a href=\"#\" className=\"text-blue-500 hover:underline mt-2 inline-block\">Read More</a>\r\n                    </div>\r\n                ))}\r\n            </div>\r\n        </div>\r\n    );\r\n};\r\n\r\nexport default BlogSection;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/sections/BlogSection.tsx b/src/components/sections/BlogSection.tsx
+--- a/src/components/sections/BlogSection.tsx	
++++ b/src/components/sections/BlogSection.tsx	
+@@ -32,15 +32,31 @@
+     const blogPosts: BlogPost[] = mockBlogPosts;
+ 
+     return (
+-        <div className="mt-8">
+-            <h2 className="text-2xl font-semibold mb-4">Latest Blog Posts</h2>
+-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+-                {blogPosts.map((post: BlogPost) => (
+-                    <div key={post.id} className="bg-white shadow-md rounded-lg p-6">
+-                        <h3 className="text-lg font-semibold mb-2">{post.title}</h3>
+-                        <p className="text-gray-600 mb-4">{post.content}</p>
+-                        <p className="text-gray-400">Created on: {post.createDate}</p>
+-                        <a href="#" className="text-blue-500 hover:underline mt-2 inline-block">Read More</a>
++        <div style={{
++            padding: '10px', // Reduced padding
++            paddingBottom: '50px', // Additional padding at the bottom to ensure visibility of the last block
++            minHeight: '100vh',
++            backgroundColor: '#f1f1f1'
++        }}>
++            <h2 style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '20px'}}>Latest Blog Posts</h2>
++            <div style={{
++                display: 'grid',
++                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
++                gap: '20px',
++                paddingBottom: '20px' // Ensuring enough space at the bottom
++            }}>
++                {mockBlogPosts.map((post: BlogPost) => (
++                    <div key={post.id} style={{
++                        background: 'white',
++                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
++                        padding: '20px',
++                        borderRadius: '10px',
++                        minHeight: '200px' // Setting a minimum height for consistency
++                    }}>
++                        <h3 style={{fontSize: '20px', fontWeight: 'bold', marginBottom: '10px'}}>{post.title}</h3>
++                        <p style={{marginBottom: '10px'}}>{post.content}</p>
++                        <p style={{color: 'gray', fontSize: '14px'}}>Created on: {post.createDate}</p>
++                        <a href="#" style={{color: 'blue', textDecoration: 'underline'}}>Read More</a>
+                     </div>
+                 ))}
+             </div>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"717b9c85-5d54-436c-8844-13f6f1faa304\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/vcs.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/public/univer.ico\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/api/error.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/api/interceptors.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/Footer.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/Modal.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/Navbar.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/course/AddStudentForm.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/course/Course.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/course/CreateCourse.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/course/UpdateCourseForm.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/module/CreateModuleForm.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/sections/BlogSection.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/sidebars/AdminSidebar.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/sidebars/Sidebar.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/sidebars/SidebarElement.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/sidebars/StudentSidebar.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/submission/CreateSubmissionBoxForm.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/user/CreateUser.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/user/UpdateUser.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/config/pages-url.config.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/pages/CoursePage.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/pages/CoursesListPage.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/pages/LoginPage.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/pages/MainPage.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/pages/NotFoundPage.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/pages/SettingPage.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/pages/SubmissionsPage.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/pages/admin/CourseManagementPage.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/pages/admin/UserManagementPage.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/pages/login.module.css\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/services/auth-token.services.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/services/auth.service.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/services/course.service.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/services/file.service.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/services/module.service.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/services/submission-box.service.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/services/submission.service.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/services/user.service.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/store/store.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/types/answer.types.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/types/apiResponse.types.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/types/auth.types.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/types/course.types.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/types/file.types.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/types/module.types.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/types/question.types.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/types/quiz.types.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/types/submission.types.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/tailwind.config.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.gitignore\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/diploma-front.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/diploma-front.iml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/package-lock.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/package-lock.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/package.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/package.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/public/index.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/public/index.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/public/logo192.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/public/logo512.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/public/manifest.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/public/manifest.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/App.css\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/App.test.tsx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/App.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/App.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/index.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/index.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/index.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/index.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/logo.svg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/reportWebVitals.ts\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/setupTests.ts\" beforeDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 3\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"2gpGVkypODgaUXYf3yWUvi6U4jz\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"ts.external.directory.path\": \"C:\\\\diploma-front\\\\node_modules\\\\typescript\\\\lib\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"717b9c85-5d54-436c-8844-13f6f1faa304\" name=\"Changes\" comment=\"\" />\r\n      <created>1716387132412</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1716387132412</updated>\r\n      <workItem from=\"1716387133822\" duration=\"490000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -1,73 +1,13 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
+   <component name="ChangeListManager">
+     <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/public/univer.ico" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/api/error.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/api/interceptors.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/Footer.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/Modal.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/Navbar.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/course/AddStudentForm.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/course/Course.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/course/CreateCourse.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/course/UpdateCourseForm.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/module/CreateModuleForm.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/sections/BlogSection.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/sidebars/AdminSidebar.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/sidebars/Sidebar.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/sidebars/SidebarElement.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/sidebars/StudentSidebar.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/submission/CreateSubmissionBoxForm.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/user/CreateUser.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/user/UpdateUser.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/config/pages-url.config.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/pages/CoursePage.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/pages/CoursesListPage.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/pages/LoginPage.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/pages/MainPage.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/pages/NotFoundPage.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/pages/SettingPage.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/pages/SubmissionsPage.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/pages/admin/CourseManagementPage.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/pages/admin/UserManagementPage.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/pages/login.module.css" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/services/auth-token.services.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/services/auth.service.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/services/course.service.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/services/file.service.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/services/module.service.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/services/submission-box.service.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/services/submission.service.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/store/store.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/types/answer.types.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/types/apiResponse.types.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/types/auth.types.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/types/course.types.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/types/file.types.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/types/module.types.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/types/question.types.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/types/quiz.types.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/types/submission.types.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/diploma-front.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/diploma-front.iml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/public/logo192.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/public/logo512.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/manifest.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/App.test.tsx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/reportWebVitals.ts" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/setupTests.ts" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/components/sections/BlogSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sections/BlogSection.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.tsx" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -77,26 +17,26 @@
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="ProjectColorInfo"><![CDATA[{
+-  "associatedIndex": 3
+-}]]></component>
++  <component name="ProjectColorInfo">{
++  &quot;associatedIndex&quot;: 3
++}</component>
+   <component name="ProjectId" id="2gpGVkypODgaUXYf3yWUvi6U4jz" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "ts.external.directory.path": "C:\\diploma-front\\node_modules\\typescript\\lib",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;ts.external.directory.path&quot;: &quot;C:\\diploma-front\\node_modules\\typescript\\lib&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+@@ -112,7 +52,11 @@
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+       <updated>1716387132412</updated>
+-      <workItem from="1716387133822" duration="490000" />
++      <workItem from="1716387133822" duration="1864000" />
++      <workItem from="1716472193692" duration="1209000" />
++      <workItem from="1716636625852" duration="4559000" />
++      <workItem from="1716897389742" duration="957000" />
++      <workItem from="1716905217059" duration="363000" />
+     </task>
+     <servers />
+   </component>

@@ -1,6 +1,5 @@
 import React, {useContext, useEffect} from 'react';
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import MainPage from "./pages/MainPage";
 import {ROUTES} from "./config/pages-url.config";
@@ -12,7 +11,6 @@ import CoursePage from "./pages/CoursePage";
 import {getAccessToken, getUser} from "./services/auth-token.services";
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
-import Sidebar from "./components/sidebars/Sidebar";
 import CourseManagementPage from "./pages/admin/CourseManagementPage";
 import {UserRoles} from "./types/auth.types";
 import UserManagementPage from "./pages/admin/UserManagementPage";
@@ -56,7 +54,6 @@ export default observer(function App() {
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar/>
-            <Sidebar/>
             <main className="flex-grow">
                 <Routes>
                     <Route path={ROUTES.HOME} element={<MainPage/>}/>

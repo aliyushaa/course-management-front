@@ -9,12 +9,10 @@ interface SidebarElementProps {
 
 const SidebarElement: React.FC<SidebarElementProps> = ({route, value, icon, clickAction}) => {
     return (
-        <li className="mb-10">
-            <a href={route} onClick={clickAction} className="flex items-center text-white hover:text-gray-400">
-                {icon}
-                {value}
-            </a>
-        </li>
+        <a href={route} onClick={clickAction} className="flex items-center text-white hover:text-gray-400">
+            {icon}
+            {value}
+        </a>
     )
 }
 
