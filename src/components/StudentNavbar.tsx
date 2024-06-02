@@ -5,6 +5,7 @@ import SidebarElement from "./sidebars/SidebarElement";
 import {FaGraduationCap} from "react-icons/fa6";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
+import {FaTrophy} from "react-icons/fa";
 
 interface StudentNavbarProps {
     logout: () => void;
@@ -22,6 +23,8 @@ const StudentNavbar: React.FC<StudentNavbarProps> = ({logout}) => {
                     </Link>
                     <SidebarElement route={ROUTES.COURSE_LIST} value={'My courses'}
                                     icon={<FaGraduationCap className="ml-10 mr-2 size-5"/>}/>
+                    <SidebarElement route={ROUTES.TOP} value={'Top students'}
+                                    icon={<FaTrophy className="ml-6 mr-2 size-5"/>}/>
                 </div>
 
                 {context.store.isAuth

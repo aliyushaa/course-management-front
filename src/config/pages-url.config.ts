@@ -2,6 +2,7 @@ class ROUTE {
     private root = '/app'
 
     HOME = this.root
+    TOP = `${this.root}/top`
     LOGIN = `${this.root}/login`
     SETTINGS = `${this.root}/settings`
     NOT_FOUND = `${this.root}/error`

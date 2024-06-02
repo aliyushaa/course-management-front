@@ -30,3 +30,8 @@ export interface IAuthResponse {
     tokenType: string
     accessToken: string
 }
+
+export interface IUserTop {
+    user: IUser
+    allTimeScore: number
+}

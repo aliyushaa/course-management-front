@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/AdminNavbar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/StudentNavbar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/TeacherNavbar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/UserTopPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/score-top.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_28_05_2024_19_13__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_28_05_2024_19_13__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_28_05_2024_19_13__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_28_05_2024_19_13__Changes_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/sidebars/SidebarElement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sidebars/SidebarElement.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AdminNavbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminNavbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/StudentNavbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/StudentNavbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TeacherNavbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TeacherNavbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/pages-url.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/pages-url.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/auth.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/auth.types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,12 +40,9 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "node.js.selected.package.tslint": "(autodetect)",
-    "ts.external.directory.path": "C:\\diploma-front\\node_modules\\typescript\\lib"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="ts.external.directory.path" value="C:\Users\aldia\Desktop\front projects\course-management-front\node_modules\typescript\lib" />
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -78,7 +77,11 @@
       <workItem from="1716722180014" duration="7942000" />
       <workItem from="1716782305295" duration="5645000" />
       <workItem from="1716800326492" duration="7000" />
-      <workItem from="1716830482780" duration="3605000" />
+      <workItem from="1716830482780" duration="3824000" />
+      <workItem from="1716966153682" duration="261000" />
+      <workItem from="1717277338098" duration="652000" />
+      <workItem from="1717316074350" duration="1230000" />
+      <workItem from="1717327554932" duration="4883000" />
     </task>
     <servers />
   </component>
