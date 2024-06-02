@@ -15,6 +15,7 @@ import CourseManagementPage from "./pages/admin/CourseManagementPage";
 import {UserRoles} from "./types/auth.types";
 import UserManagementPage from "./pages/admin/UserManagementPage";
 import {SubmissionsPage} from "./pages/SubmissionsPage";
+import UserTopPage from "./pages/UserTopPage";
 
 const unsecuredRoutes = [ROUTES.HOME, ROUTES.LOGIN]
 const adminRoutes = [ROUTES.COURSE_MANAGEMENT]
@@ -57,6 +58,7 @@ export default observer(function App() {
             <main className="flex-grow">
                 <Routes>
                     <Route path={ROUTES.HOME} element={<MainPage/>}/>
+                    <Route path={ROUTES.TOP} element={<UserTopPage/>}/>
                     <Route path={ROUTES.SETTINGS} element={<SettingPage/>}/>
                     <Route path={ROUTES.LOGIN} element={<LoginPage/>}/>
                     <Route path={ROUTES.COURSE_LIST} element={<CoursesListPage/>}/>

@@ -1,0 +1,725 @@
+Index: src/types/auth.types.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>export interface IAuthForm {\r\n    email: string\r\n    password: string\r\n}\r\n\r\nexport enum UserRoles {\r\n    STUDENT = \"STUDENT\",\r\n    TEACHER = \"TEACHER\",\r\n    MODERATOR = \"MODERATOR\",\r\n    ADMIN = \"ADMIN\"\r\n}\r\n\r\nexport interface IUser {\r\n    id: number\r\n    name: string\r\n    email: string\r\n    roles: string[]\r\n    courseIds: number[]\r\n}\r\n\r\nexport interface ICreateUser {\r\n    name: string\r\n    email: string\r\n    password: string\r\n    role: string\r\n}\r\n\r\nexport interface IAuthResponse {\r\n    user: IUser\r\n    tokenType: string\r\n    accessToken: string\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/types/auth.types.ts b/src/types/auth.types.ts
+--- a/src/types/auth.types.ts	(revision 5902012d2fd76226abf134ef19d8ba834b0bf36d)
++++ b/src/types/auth.types.ts	(date 1717337795152)
+@@ -29,4 +29,9 @@
+     user: IUser
+     tokenType: string
+     accessToken: string
++}
++
++export interface IUserTop {
++    user: IUser
++    allTimeScore: number
+ }
+\ No newline at end of file
+Index: src/api/interceptors.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import axios, {CreateAxiosDefaults} from \"axios\";\r\nimport {getAccessToken} from \"../services/auth-token.services\";\r\n\r\nconst options: CreateAxiosDefaults = {\r\n    baseURL: 'http://77.91.75.55:8080/api',\r\n    headers: {\r\n        'Content-Type': 'application/json'\r\n    }\r\n}\r\n\r\nconst axiosClassic = axios.create(options)\r\n\r\nconst axiosWithAuth = axios.create(options)\r\naxiosWithAuth.interceptors.request.use(config => {\r\n    const accessToken = getAccessToken()\r\n\r\n    if (config?.headers && accessToken)\r\n        config.headers.Authorization = `Bearer ${accessToken}`\r\n\r\n    return config\r\n})\r\n\r\naxiosWithAuth.interceptors.response.use(\r\n    config => config,\r\n    async error => {\r\n        const originalRequest = error.config\r\n        // if ((\r\n        //         error?.response?.status === 401\r\n        //         || errorCatch(error) === 'jwt expired'\r\n        //         || errorCatch(error) === 'jwt must be provided')\r\n        //     && error.config && !error.config._isRetry) {\r\n        //\r\n        //     originalRequest._isRetry = true\r\n        //     try {\r\n        //         return axiosWithAuth.request(originalRequest)\r\n        //     } catch (e) {\r\n        //         if (errorCatch(e) === 'jwt expired') removeFromStorage()\r\n        //     }\r\n        // }\r\n    }\r\n)\r\n\r\nexport {axiosClassic, axiosWithAuth}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/api/interceptors.ts b/src/api/interceptors.ts
+--- a/src/api/interceptors.ts	(revision 5902012d2fd76226abf134ef19d8ba834b0bf36d)
++++ b/src/api/interceptors.ts	(date 1717316100142)
+@@ -2,7 +2,7 @@
+ import {getAccessToken} from "../services/auth-token.services";
+ 
+ const options: CreateAxiosDefaults = {
+-    baseURL: 'http://77.91.75.55:8080/api',
++    baseURL: 'http://localhost:8080/api',
+     headers: {
+         'Content-Type': 'application/json'
+     }
+Index: src/App.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {useContext, useEffect} from 'react';\r\nimport Navbar from \"./components/Navbar\";\r\nimport Footer from \"./components/Footer\";\r\nimport {Route, Routes, useNavigate} from 'react-router-dom';\r\nimport MainPage from \"./pages/MainPage\";\r\nimport {ROUTES} from \"./config/pages-url.config\";\r\nimport SettingPage from \"./pages/SettingPage\";\r\nimport NotFoundPage from \"./pages/NotFoundPage\";\r\nimport LoginPage from \"./pages/LoginPage\";\r\nimport CoursesListPage from \"./pages/CoursesListPage\";\r\nimport CoursePage from \"./pages/CoursePage\";\r\nimport {getAccessToken, getUser} from \"./services/auth-token.services\";\r\nimport {Context} from \"./index\";\r\nimport {observer} from \"mobx-react-lite\";\r\nimport Sidebar from \"./components/sidebars/Sidebar\";\r\nimport CourseManagementPage from \"./pages/admin/CourseManagementPage\";\r\nimport {UserRoles} from \"./types/auth.types\";\r\nimport UserManagementPage from \"./pages/admin/UserManagementPage\";\r\nimport {SubmissionsPage} from \"./pages/SubmissionsPage\";\r\n\r\nconst unsecuredRoutes = [ROUTES.HOME, ROUTES.LOGIN]\r\nconst adminRoutes = [ROUTES.COURSE_MANAGEMENT]\r\n\r\nfunction isAuthenticated() {\r\n    const user = getUser();\r\n    const token = getAccessToken();\r\n    return user && token;\r\n}\r\n\r\nexport function containsRole(role: string) {\r\n    const user = getUser();\r\n    return user?.roles.includes(role)\r\n}\r\n\r\nexport default observer(function App() {\r\n    const {store} = useContext(Context)\r\n    const navigate = useNavigate()\r\n\r\n    useEffect(() => {\r\n        const user = getUser();\r\n        const token = getAccessToken();\r\n        if (user && token) {\r\n            store.setAuth(true)\r\n            store.setUser(user)\r\n        }\r\n\r\n        const currentPath = window.location.pathname\r\n        if (!unsecuredRoutes.includes(currentPath) && !isAuthenticated()) {\r\n            navigate(ROUTES.LOGIN);\r\n        }\r\n        if (adminRoutes.includes(currentPath) && !containsRole(UserRoles.ADMIN)) {\r\n            navigate(ROUTES.NOT_FOUND);\r\n        }\r\n    }, [])\r\n\r\n    return (\r\n        <div className=\"flex flex-col min-h-screen\">\r\n            <Navbar/>\r\n            <Sidebar/>\r\n            <main className=\"flex-grow\">\r\n                <Routes>\r\n                    <Route path={ROUTES.HOME} element={<MainPage/>}/>\r\n                    <Route path={ROUTES.SETTINGS} element={<SettingPage/>}/>\r\n                    <Route path={ROUTES.LOGIN} element={<LoginPage/>}/>\r\n                    <Route path={ROUTES.COURSE_LIST} element={<CoursesListPage/>}/>\r\n                    <Route path={ROUTES.COURSE_PAGE_WITH_PARAM} element={<CoursePage/>}/>\r\n                    <Route path={ROUTES.SUBMISSIONS_PAGE + '/:boxId'} element={<SubmissionsPage/>}/>\r\n\r\n                    <Route path={ROUTES.COURSE_MANAGEMENT} element={<CourseManagementPage/>}/>\r\n                    <Route path={ROUTES.USER_MANAGEMENT} element={<UserManagementPage/>}/>\r\n\r\n                    <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage/>}/>\r\n                    <Route path='*' element={<NotFoundPage/>}/>\r\n                </Routes>\r\n            </main>\r\n        </div>\r\n    )\r\n})
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/App.tsx b/src/App.tsx
+--- a/src/App.tsx	(revision 5902012d2fd76226abf134ef19d8ba834b0bf36d)
++++ b/src/App.tsx	(date 1717339061002)
+@@ -17,6 +17,7 @@
+ import {UserRoles} from "./types/auth.types";
+ import UserManagementPage from "./pages/admin/UserManagementPage";
+ import {SubmissionsPage} from "./pages/SubmissionsPage";
++import UserTopPage from "./pages/UserTopPage";
+ 
+ const unsecuredRoutes = [ROUTES.HOME, ROUTES.LOGIN]
+ const adminRoutes = [ROUTES.COURSE_MANAGEMENT]
+@@ -60,6 +61,7 @@
+             <main className="flex-grow">
+                 <Routes>
+                     <Route path={ROUTES.HOME} element={<MainPage/>}/>
++                    <Route path={ROUTES.TOP} element={<UserTopPage/>}/>
+                     <Route path={ROUTES.SETTINGS} element={<SettingPage/>}/>
+                     <Route path={ROUTES.LOGIN} element={<LoginPage/>}/>
+                     <Route path={ROUTES.COURSE_LIST} element={<CoursesListPage/>}/>
+Index: package-lock.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package-lock.json b/package-lock.json
+--- a/package-lock.json	(revision 5902012d2fd76226abf134ef19d8ba834b0bf36d)
++++ b/package-lock.json	(date 1717337983166)
+@@ -8,6 +8,9 @@
+       "name": "diploma-front",
+       "version": "0.1.0",
+       "dependencies": {
++        "@emotion/react": "^11.11.4",
++        "@emotion/styled": "^11.11.5",
++        "@mui/material": "^5.15.19",
+         "@testing-library/jest-dom": "^5.17.0",
+         "@testing-library/react": "^13.4.0",
+         "@testing-library/user-event": "^13.5.0",
+@@ -2363,6 +2366,14 @@
+       "resolved": "https://registry.npmjs.org/@emotion/hash/-/hash-0.9.1.tgz",
+       "integrity": "sha512-gJB6HLm5rYwSLI6PQa+X1t5CFGrv1J1TWG+sOyMCeKz2ojaj6Fnl/rZEspogG+cvqbt4AE/2eIyD2QfLKTBNlQ=="
+     },
++    "node_modules/@emotion/is-prop-valid": {
++      "version": "1.2.2",
++      "resolved": "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-1.2.2.tgz",
++      "integrity": "sha512-uNsoYd37AFmaCdXlg6EYD1KaPOaRWRByMCYzbKUX4+hhMfrxdVSelShywL4JVaAeM/eHUOSprYBQls+/neX3pw==",
++      "dependencies": {
++        "@emotion/memoize": "^0.8.1"
++      }
++    },
+     "node_modules/@emotion/memoize": {
+       "version": "0.8.1",
+       "resolved": "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.8.1.tgz",
+@@ -2408,6 +2419,28 @@
+       "resolved": "https://registry.npmjs.org/@emotion/sheet/-/sheet-1.2.2.tgz",
+       "integrity": "sha512-0QBtGvaqtWi+nx6doRwDdBIzhNdZrXUppvTM4dtZZWEGTXL/XE/yJxLMGlDT1Gt+UHH5IX1n+jkXyytE/av7OA=="
+     },
++    "node_modules/@emotion/styled": {
++      "version": "11.11.5",
++      "resolved": "https://registry.npmjs.org/@emotion/styled/-/styled-11.11.5.tgz",
++      "integrity": "sha512-/ZjjnaNKvuMPxcIiUkf/9SHoG4Q196DRl1w82hQ3WCsjo1IUR8uaGWrC6a87CrYAW0Kb/pK7hk8BnLgLRi9KoQ==",
++      "dependencies": {
++        "@babel/runtime": "^7.18.3",
++        "@emotion/babel-plugin": "^11.11.0",
++        "@emotion/is-prop-valid": "^1.2.2",
++        "@emotion/serialize": "^1.1.4",
++        "@emotion/use-insertion-effect-with-fallbacks": "^1.0.1",
++        "@emotion/utils": "^1.2.1"
++      },
++      "peerDependencies": {
++        "@emotion/react": "^11.0.0-rc.0",
++        "react": ">=16.8.0"
++      },
++      "peerDependenciesMeta": {
++        "@types/react": {
++          "optional": true
++        }
++      }
++    },
+     "node_modules/@emotion/unitless": {
+       "version": "0.8.1",
+       "resolved": "https://registry.npmjs.org/@emotion/unitless/-/unitless-0.8.1.tgz",
+@@ -3411,6 +3444,236 @@
+       "resolved": "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz",
+       "integrity": "sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A=="
+     },
++    "node_modules/@mui/base": {
++      "version": "5.0.0-beta.40",
++      "resolved": "https://registry.npmjs.org/@mui/base/-/base-5.0.0-beta.40.tgz",
++      "integrity": "sha512-I/lGHztkCzvwlXpjD2+SNmvNQvB4227xBXhISPjEaJUXGImOQ9f3D2Yj/T3KasSI/h0MLWy74X0J6clhPmsRbQ==",
++      "dependencies": {
++        "@babel/runtime": "^7.23.9",
++        "@floating-ui/react-dom": "^2.0.8",
++        "@mui/types": "^7.2.14",
++        "@mui/utils": "^5.15.14",
++        "@popperjs/core": "^2.11.8",
++        "clsx": "^2.1.0",
++        "prop-types": "^15.8.1"
++      },
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/mui-org"
++      },
++      "peerDependencies": {
++        "@types/react": "^17.0.0 || ^18.0.0",
++        "react": "^17.0.0 || ^18.0.0",
++        "react-dom": "^17.0.0 || ^18.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@types/react": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/@mui/core-downloads-tracker": {
++      "version": "5.15.19",
++      "resolved": "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-5.15.19.tgz",
++      "integrity": "sha512-tCHSi/Tomez9ERynFhZRvFO6n9ATyrPs+2N80DMDzp6xDVirbBjEwhPcE+x7Lj+nwYw0SqFkOxyvMP0irnm55w==",
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/mui-org"
++      }
++    },
++    "node_modules/@mui/material": {
++      "version": "5.15.19",
++      "resolved": "https://registry.npmjs.org/@mui/material/-/material-5.15.19.tgz",
++      "integrity": "sha512-lp5xQBbcRuxNtjpWU0BWZgIrv2XLUz4RJ0RqFXBdESIsKoGCQZ6P3wwU5ZPuj5TjssNiKv9AlM+vHopRxZhvVQ==",
++      "dependencies": {
++        "@babel/runtime": "^7.23.9",
++        "@mui/base": "5.0.0-beta.40",
++        "@mui/core-downloads-tracker": "^5.15.19",
++        "@mui/system": "^5.15.15",
++        "@mui/types": "^7.2.14",
++        "@mui/utils": "^5.15.14",
++        "@types/react-transition-group": "^4.4.10",
++        "clsx": "^2.1.0",
++        "csstype": "^3.1.3",
++        "prop-types": "^15.8.1",
++        "react-is": "^18.2.0",
++        "react-transition-group": "^4.4.5"
++      },
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/mui-org"
++      },
++      "peerDependencies": {
++        "@emotion/react": "^11.5.0",
++        "@emotion/styled": "^11.3.0",
++        "@types/react": "^17.0.0 || ^18.0.0",
++        "react": "^17.0.0 || ^18.0.0",
++        "react-dom": "^17.0.0 || ^18.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@emotion/react": {
++          "optional": true
++        },
++        "@emotion/styled": {
++          "optional": true
++        },
++        "@types/react": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/@mui/material/node_modules/react-is": {
++      "version": "18.3.1",
++      "resolved": "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz",
++      "integrity": "sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg=="
++    },
++    "node_modules/@mui/private-theming": {
++      "version": "5.15.14",
++      "resolved": "https://registry.npmjs.org/@mui/private-theming/-/private-theming-5.15.14.tgz",
++      "integrity": "sha512-UH0EiZckOWcxiXLX3Jbb0K7rC8mxTr9L9l6QhOZxYc4r8FHUkefltV9VDGLrzCaWh30SQiJvAEd7djX3XXY6Xw==",
++      "dependencies": {
++        "@babel/runtime": "^7.23.9",
++        "@mui/utils": "^5.15.14",
++        "prop-types": "^15.8.1"
++      },
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/mui-org"
++      },
++      "peerDependencies": {
++        "@types/react": "^17.0.0 || ^18.0.0",
++        "react": "^17.0.0 || ^18.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@types/react": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/@mui/styled-engine": {
++      "version": "5.15.14",
++      "resolved": "https://registry.npmjs.org/@mui/styled-engine/-/styled-engine-5.15.14.tgz",
++      "integrity": "sha512-RILkuVD8gY6PvjZjqnWhz8fu68dVkqhM5+jYWfB5yhlSQKg+2rHkmEwm75XIeAqI3qwOndK6zELK5H6Zxn4NHw==",
++      "dependencies": {
++        "@babel/runtime": "^7.23.9",
++        "@emotion/cache": "^11.11.0",
++        "csstype": "^3.1.3",
++        "prop-types": "^15.8.1"
++      },
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/mui-org"
++      },
++      "peerDependencies": {
++        "@emotion/react": "^11.4.1",
++        "@emotion/styled": "^11.3.0",
++        "react": "^17.0.0 || ^18.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@emotion/react": {
++          "optional": true
++        },
++        "@emotion/styled": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/@mui/system": {
++      "version": "5.15.15",
++      "resolved": "https://registry.npmjs.org/@mui/system/-/system-5.15.15.tgz",
++      "integrity": "sha512-aulox6N1dnu5PABsfxVGOZffDVmlxPOVgj56HrUnJE8MCSh8lOvvkd47cebIVQQYAjpwieXQXiDPj5pwM40jTQ==",
++      "dependencies": {
++        "@babel/runtime": "^7.23.9",
++        "@mui/private-theming": "^5.15.14",
++        "@mui/styled-engine": "^5.15.14",
++        "@mui/types": "^7.2.14",
++        "@mui/utils": "^5.15.14",
++        "clsx": "^2.1.0",
++        "csstype": "^3.1.3",
++        "prop-types": "^15.8.1"
++      },
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/mui-org"
++      },
++      "peerDependencies": {
++        "@emotion/react": "^11.5.0",
++        "@emotion/styled": "^11.3.0",
++        "@types/react": "^17.0.0 || ^18.0.0",
++        "react": "^17.0.0 || ^18.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@emotion/react": {
++          "optional": true
++        },
++        "@emotion/styled": {
++          "optional": true
++        },
++        "@types/react": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/@mui/types": {
++      "version": "7.2.14",
++      "resolved": "https://registry.npmjs.org/@mui/types/-/types-7.2.14.tgz",
++      "integrity": "sha512-MZsBZ4q4HfzBsywtXgM1Ksj6HDThtiwmOKUXH1pKYISI9gAVXCNHNpo7TlGoGrBaYWZTdNoirIN7JsQcQUjmQQ==",
++      "peerDependencies": {
++        "@types/react": "^17.0.0 || ^18.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@types/react": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/@mui/utils": {
++      "version": "5.15.14",
++      "resolved": "https://registry.npmjs.org/@mui/utils/-/utils-5.15.14.tgz",
++      "integrity": "sha512-0lF/7Hh/ezDv5X7Pry6enMsbYyGKjADzvHyo3Qrc/SSlTsQ1VkbDMbH0m2t3OR5iIVLwMoxwM7yGd+6FCMtTFA==",
++      "dependencies": {
++        "@babel/runtime": "^7.23.9",
++        "@types/prop-types": "^15.7.11",
++        "prop-types": "^15.8.1",
++        "react-is": "^18.2.0"
++      },
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/mui-org"
++      },
++      "peerDependencies": {
++        "@types/react": "^17.0.0 || ^18.0.0",
++        "react": "^17.0.0 || ^18.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@types/react": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/@mui/utils/node_modules/react-is": {
++      "version": "18.3.1",
++      "resolved": "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz",
++      "integrity": "sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg=="
++    },
+     "node_modules/@nicolo-ribaudo/eslint-scope-5-internals": {
+       "version": "5.1.1-v1",
+       "resolved": "https://registry.npmjs.org/@nicolo-ribaudo/eslint-scope-5-internals/-/eslint-scope-5-internals-5.1.1-v1.tgz",
+@@ -3529,6 +3792,15 @@
+         }
+       }
+     },
++    "node_modules/@popperjs/core": {
++      "version": "2.11.8",
++      "resolved": "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz",
++      "integrity": "sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==",
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/popperjs"
++      }
++    },
+     "node_modules/@remix-run/router": {
+       "version": "1.15.3",
+       "resolved": "https://registry.npmjs.org/@remix-run/router/-/router-1.15.3.tgz",
+@@ -20218,6 +20490,14 @@
+       "resolved": "https://registry.npmjs.org/@emotion/hash/-/hash-0.9.1.tgz",
+       "integrity": "sha512-gJB6HLm5rYwSLI6PQa+X1t5CFGrv1J1TWG+sOyMCeKz2ojaj6Fnl/rZEspogG+cvqbt4AE/2eIyD2QfLKTBNlQ=="
+     },
++    "@emotion/is-prop-valid": {
++      "version": "1.2.2",
++      "resolved": "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-1.2.2.tgz",
++      "integrity": "sha512-uNsoYd37AFmaCdXlg6EYD1KaPOaRWRByMCYzbKUX4+hhMfrxdVSelShywL4JVaAeM/eHUOSprYBQls+/neX3pw==",
++      "requires": {
++        "@emotion/memoize": "^0.8.1"
++      }
++    },
+     "@emotion/memoize": {
+       "version": "0.8.1",
+       "resolved": "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.8.1.tgz",
+@@ -20255,6 +20535,19 @@
+       "resolved": "https://registry.npmjs.org/@emotion/sheet/-/sheet-1.2.2.tgz",
+       "integrity": "sha512-0QBtGvaqtWi+nx6doRwDdBIzhNdZrXUppvTM4dtZZWEGTXL/XE/yJxLMGlDT1Gt+UHH5IX1n+jkXyytE/av7OA=="
+     },
++    "@emotion/styled": {
++      "version": "11.11.5",
++      "resolved": "https://registry.npmjs.org/@emotion/styled/-/styled-11.11.5.tgz",
++      "integrity": "sha512-/ZjjnaNKvuMPxcIiUkf/9SHoG4Q196DRl1w82hQ3WCsjo1IUR8uaGWrC6a87CrYAW0Kb/pK7hk8BnLgLRi9KoQ==",
++      "requires": {
++        "@babel/runtime": "^7.18.3",
++        "@emotion/babel-plugin": "^11.11.0",
++        "@emotion/is-prop-valid": "^1.2.2",
++        "@emotion/serialize": "^1.1.4",
++        "@emotion/use-insertion-effect-with-fallbacks": "^1.0.1",
++        "@emotion/utils": "^1.2.1"
++      }
++    },
+     "@emotion/unitless": {
+       "version": "0.8.1",
+       "resolved": "https://registry.npmjs.org/@emotion/unitless/-/unitless-0.8.1.tgz",
+@@ -20991,6 +21284,111 @@
+       "resolved": "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz",
+       "integrity": "sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A=="
+     },
++    "@mui/base": {
++      "version": "5.0.0-beta.40",
++      "resolved": "https://registry.npmjs.org/@mui/base/-/base-5.0.0-beta.40.tgz",
++      "integrity": "sha512-I/lGHztkCzvwlXpjD2+SNmvNQvB4227xBXhISPjEaJUXGImOQ9f3D2Yj/T3KasSI/h0MLWy74X0J6clhPmsRbQ==",
++      "requires": {
++        "@babel/runtime": "^7.23.9",
++        "@floating-ui/react-dom": "^2.0.8",
++        "@mui/types": "^7.2.14",
++        "@mui/utils": "^5.15.14",
++        "@popperjs/core": "^2.11.8",
++        "clsx": "^2.1.0",
++        "prop-types": "^15.8.1"
++      }
++    },
++    "@mui/core-downloads-tracker": {
++      "version": "5.15.19",
++      "resolved": "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-5.15.19.tgz",
++      "integrity": "sha512-tCHSi/Tomez9ERynFhZRvFO6n9ATyrPs+2N80DMDzp6xDVirbBjEwhPcE+x7Lj+nwYw0SqFkOxyvMP0irnm55w=="
++    },
++    "@mui/material": {
++      "version": "5.15.19",
++      "resolved": "https://registry.npmjs.org/@mui/material/-/material-5.15.19.tgz",
++      "integrity": "sha512-lp5xQBbcRuxNtjpWU0BWZgIrv2XLUz4RJ0RqFXBdESIsKoGCQZ6P3wwU5ZPuj5TjssNiKv9AlM+vHopRxZhvVQ==",
++      "requires": {
++        "@babel/runtime": "^7.23.9",
++        "@mui/base": "5.0.0-beta.40",
++        "@mui/core-downloads-tracker": "^5.15.19",
++        "@mui/system": "^5.15.15",
++        "@mui/types": "^7.2.14",
++        "@mui/utils": "^5.15.14",
++        "@types/react-transition-group": "^4.4.10",
++        "clsx": "^2.1.0",
++        "csstype": "^3.1.3",
++        "prop-types": "^15.8.1",
++        "react-is": "^18.2.0",
++        "react-transition-group": "^4.4.5"
++      },
++      "dependencies": {
++        "react-is": {
++          "version": "18.3.1",
++          "resolved": "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz",
++          "integrity": "sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg=="
++        }
++      }
++    },
++    "@mui/private-theming": {
++      "version": "5.15.14",
++      "resolved": "https://registry.npmjs.org/@mui/private-theming/-/private-theming-5.15.14.tgz",
++      "integrity": "sha512-UH0EiZckOWcxiXLX3Jbb0K7rC8mxTr9L9l6QhOZxYc4r8FHUkefltV9VDGLrzCaWh30SQiJvAEd7djX3XXY6Xw==",
++      "requires": {
++        "@babel/runtime": "^7.23.9",
++        "@mui/utils": "^5.15.14",
++        "prop-types": "^15.8.1"
++      }
++    },
++    "@mui/styled-engine": {
++      "version": "5.15.14",
++      "resolved": "https://registry.npmjs.org/@mui/styled-engine/-/styled-engine-5.15.14.tgz",
++      "integrity": "sha512-RILkuVD8gY6PvjZjqnWhz8fu68dVkqhM5+jYWfB5yhlSQKg+2rHkmEwm75XIeAqI3qwOndK6zELK5H6Zxn4NHw==",
++      "requires": {
++        "@babel/runtime": "^7.23.9",
++        "@emotion/cache": "^11.11.0",
++        "csstype": "^3.1.3",
++        "prop-types": "^15.8.1"
++      }
++    },
++    "@mui/system": {
++      "version": "5.15.15",
++      "resolved": "https://registry.npmjs.org/@mui/system/-/system-5.15.15.tgz",
++      "integrity": "sha512-aulox6N1dnu5PABsfxVGOZffDVmlxPOVgj56HrUnJE8MCSh8lOvvkd47cebIVQQYAjpwieXQXiDPj5pwM40jTQ==",
++      "requires": {
++        "@babel/runtime": "^7.23.9",
++        "@mui/private-theming": "^5.15.14",
++        "@mui/styled-engine": "^5.15.14",
++        "@mui/types": "^7.2.14",
++        "@mui/utils": "^5.15.14",
++        "clsx": "^2.1.0",
++        "csstype": "^3.1.3",
++        "prop-types": "^15.8.1"
++      }
++    },
++    "@mui/types": {
++      "version": "7.2.14",
++      "resolved": "https://registry.npmjs.org/@mui/types/-/types-7.2.14.tgz",
++      "integrity": "sha512-MZsBZ4q4HfzBsywtXgM1Ksj6HDThtiwmOKUXH1pKYISI9gAVXCNHNpo7TlGoGrBaYWZTdNoirIN7JsQcQUjmQQ==",
++      "requires": {}
++    },
++    "@mui/utils": {
++      "version": "5.15.14",
++      "resolved": "https://registry.npmjs.org/@mui/utils/-/utils-5.15.14.tgz",
++      "integrity": "sha512-0lF/7Hh/ezDv5X7Pry6enMsbYyGKjADzvHyo3Qrc/SSlTsQ1VkbDMbH0m2t3OR5iIVLwMoxwM7yGd+6FCMtTFA==",
++      "requires": {
++        "@babel/runtime": "^7.23.9",
++        "@types/prop-types": "^15.7.11",
++        "prop-types": "^15.8.1",
++        "react-is": "^18.2.0"
++      },
++      "dependencies": {
++        "react-is": {
++          "version": "18.3.1",
++          "resolved": "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz",
++          "integrity": "sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg=="
++        }
++      }
++    },
+     "@nicolo-ribaudo/eslint-scope-5-internals": {
+       "version": "5.1.1-v1",
+       "resolved": "https://registry.npmjs.org/@nicolo-ribaudo/eslint-scope-5-internals/-/eslint-scope-5-internals-5.1.1-v1.tgz",
+@@ -21060,6 +21458,11 @@
+         "source-map": "^0.7.3"
+       }
+     },
++    "@popperjs/core": {
++      "version": "2.11.8",
++      "resolved": "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz",
++      "integrity": "sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A=="
++    },
+     "@remix-run/router": {
+       "version": "1.15.3",
+       "resolved": "https://registry.npmjs.org/@remix-run/router/-/router-1.15.3.tgz",
+Index: package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"name\": \"diploma-front\",\r\n  \"version\": \"0.1.0\",\r\n  \"private\": true,\r\n  \"dependencies\": {\r\n    \"@testing-library/jest-dom\": \"^5.17.0\",\r\n    \"@testing-library/react\": \"^13.4.0\",\r\n    \"@testing-library/user-event\": \"^13.5.0\",\r\n    \"@types/jest\": \"^27.5.2\",\r\n    \"@types/js-cookie\": \"^3.0.6\",\r\n    \"@types/node\": \"^16.18.89\",\r\n    \"@types/react\": \"^18.2.66\",\r\n    \"@types/react-dom\": \"^18.2.22\",\r\n    \"axios\": \"^1.6.8\",\r\n    \"date-fns\": \"^3.6.0\",\r\n    \"js-cookie\": \"^3.0.5\",\r\n    \"mobx\": \"^6.12.3\",\r\n    \"mobx-react-lite\": \"^4.0.7\",\r\n    \"react\": \"^18.2.0\",\r\n    \"react-calendar\": \"^4.8.0\",\r\n    \"react-datepicker\": \"^6.9.0\",\r\n    \"react-dom\": \"^18.2.0\",\r\n    \"react-hook-form\": \"^7.51.2\",\r\n    \"react-icons\": \"^5.0.1\",\r\n    \"react-router-dom\": \"^6.22.3\",\r\n    \"react-scripts\": \"5.0.1\",\r\n    \"react-select\": \"^5.8.0\",\r\n    \"react-toastify\": \"^10.0.5\",\r\n    \"typescript\": \"^4.9.5\",\r\n    \"web-vitals\": \"^2.1.4\"\r\n  },\r\n  \"scripts\": {\r\n    \"start\": \"react-scripts start\",\r\n    \"build\": \"react-scripts build\",\r\n    \"test\": \"react-scripts test\",\r\n    \"eject\": \"react-scripts eject\"\r\n  },\r\n  \"eslintConfig\": {\r\n    \"extends\": [\r\n      \"react-app\",\r\n      \"react-app/jest\"\r\n    ]\r\n  },\r\n  \"browserslist\": {\r\n    \"production\": [\r\n      \">0.2%\",\r\n      \"not dead\",\r\n      \"not op_mini all\"\r\n    ],\r\n    \"development\": [\r\n      \"last 1 chrome version\",\r\n      \"last 1 firefox version\",\r\n      \"last 1 safari version\"\r\n    ]\r\n  },\r\n  \"devDependencies\": {\r\n    \"tailwindcss\": \"^3.4.1\"\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package.json b/package.json
+--- a/package.json	(revision 5902012d2fd76226abf134ef19d8ba834b0bf36d)
++++ b/package.json	(date 1717337983165)
+@@ -3,6 +3,9 @@
+   "version": "0.1.0",
+   "private": true,
+   "dependencies": {
++    "@emotion/react": "^11.11.4",
++    "@emotion/styled": "^11.11.5",
++    "@mui/material": "^5.15.19",
+     "@testing-library/jest-dom": "^5.17.0",
+     "@testing-library/react": "^13.4.0",
+     "@testing-library/user-event": "^13.5.0",
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"717b9c85-5d54-436c-8844-13f6f1faa304\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/components/sections/CreateBlogForm.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/services/blog.service.ts\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/types/blog.types.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/public/index.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/public/index.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/App.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/App.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/api/interceptors.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/api/interceptors.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/components/sections/BlogSection.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/components/sections/BlogSection.tsx\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitSEFilterConfiguration\">\r\n    <file-type-list>\r\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\r\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\r\n      <filtered-out-file-type name=\"TAG\" />\r\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\r\n    </file-type-list>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2gpGVkypODgaUXYf3yWUvi6U4jz\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\r\n    <property name=\"ts.external.directory.path\" value=\"C:\\Users\\aldia\\Desktop\\front projects\\course-management-front\\node_modules\\typescript\\lib\" />\r\n    <property name=\"vue.rearranger.settings.migration\" value=\"true\" />\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"717b9c85-5d54-436c-8844-13f6f1faa304\" name=\"Changes\" comment=\"\" />\r\n      <created>1716387132412</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1716387132412</updated>\r\n      <workItem from=\"1716387133822\" duration=\"490000\" />\r\n      <workItem from=\"1716406387959\" duration=\"4131000\" />\r\n      <workItem from=\"1716438476894\" duration=\"1739000\" />\r\n      <workItem from=\"1716457013656\" duration=\"10495000\" />\r\n      <workItem from=\"1716486375449\" duration=\"6155000\" />\r\n      <workItem from=\"1716525748053\" duration=\"8087000\" />\r\n      <workItem from=\"1716541847884\" duration=\"8599000\" />\r\n      <workItem from=\"1716580033790\" duration=\"618000\" />\r\n      <workItem from=\"1716632330997\" duration=\"62000\" />\r\n      <workItem from=\"1716632586129\" duration=\"51000\" />\r\n      <workItem from=\"1716633054156\" duration=\"2383000\" />\r\n      <workItem from=\"1716642108215\" duration=\"23000\" />\r\n      <workItem from=\"1716645153337\" duration=\"2263000\" />\r\n      <workItem from=\"1716657840907\" duration=\"9314000\" />\r\n      <workItem from=\"1716672114347\" duration=\"69000\" />\r\n      <workItem from=\"1716711322968\" duration=\"566000\" />\r\n      <workItem from=\"1716722180014\" duration=\"7942000\" />\r\n      <workItem from=\"1716782305295\" duration=\"5645000\" />\r\n      <workItem from=\"1716800326492\" duration=\"7000\" />\r\n      <workItem from=\"1716830482780\" duration=\"3605000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.History.Properties\">\r\n    <option name=\"COLUMN_ID_ORDER\">\r\n      <list>\r\n        <option value=\"Default.Root\" />\r\n        <option value=\"Default.Author\" />\r\n        <option value=\"Default.Date\" />\r\n        <option value=\"Default.Subject\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"dev\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 5902012d2fd76226abf134ef19d8ba834b0bf36d)
++++ b/.idea/workspace.xml	(date 1717338961773)
+@@ -2,14 +2,13 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/components/sections/CreateBlogForm.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/services/blog.service.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/types/blog.types.ts" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/services/score-top.service.ts" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/api/interceptors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/interceptors.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/components/sections/BlogSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sections/BlogSection.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/types/auth.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/auth.types.ts" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -77,7 +76,11 @@
+       <workItem from="1716722180014" duration="7942000" />
+       <workItem from="1716782305295" duration="5645000" />
+       <workItem from="1716800326492" duration="7000" />
+-      <workItem from="1716830482780" duration="3605000" />
++      <workItem from="1716830482780" duration="3824000" />
++      <workItem from="1716966153682" duration="261000" />
++      <workItem from="1717277338098" duration="652000" />
++      <workItem from="1717316074350" duration="1230000" />
++      <workItem from="1717327554932" duration="2850000" />
+     </task>
+     <servers />
+   </component>
+Index: src/config/pages-url.config.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>class ROUTE {\r\n    private root = '/app'\r\n\r\n    HOME = this.root\r\n    LOGIN = `${this.root}/login`\r\n    SETTINGS = `${this.root}/settings`\r\n    NOT_FOUND = `${this.root}/error`\r\n    COURSE_LIST = `${this.root}/courses`\r\n    COURSE_PAGE = `${this.root}/course`\r\n    COURSE_PAGE_WITH_PARAM = `${this.root}/course/:courseId`\r\n    SUBMISSIONS_PAGE = `${this.root}/submissions`\r\n\r\n    COURSE_MANAGEMENT = `${this.root}/course-management`\r\n    USER_MANAGEMENT = `${this.root}/user-management`\r\n}\r\n\r\nexport const ROUTES = new ROUTE()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/config/pages-url.config.ts b/src/config/pages-url.config.ts
+--- a/src/config/pages-url.config.ts	(revision 5902012d2fd76226abf134ef19d8ba834b0bf36d)
++++ b/src/config/pages-url.config.ts	(date 1717339035284)
+@@ -2,6 +2,7 @@
+     private root = '/app'
+ 
+     HOME = this.root
++    TOP = `${this.root}/top`
+     LOGIN = `${this.root}/login`
+     SETTINGS = `${this.root}/settings`
+     NOT_FOUND = `${this.root}/error`
+Index: src/pages/UserTopPage.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/pages/UserTopPage.tsx b/src/pages/UserTopPage.tsx
+new file mode 100644
+--- /dev/null	(date 1717339195992)
++++ b/src/pages/UserTopPage.tsx	(date 1717339195992)
+@@ -0,0 +1,73 @@
++import React from 'react'
++import Card from '@mui/material/Card'
++import CardContent from '@mui/material/CardContent'
++import Typography from '@mui/material/Typography'
++import { createTheme, ThemeProvider } from '@mui/material/styles'
++import { teal, amber } from '@mui/material/colors'
++
++interface IUserTop {
++    user: IUser
++    allTimeScore: number
++}
++
++interface IUser {
++    id: number
++    name: string
++    email: string
++    roles: string[]
++    courseIds: number[]
++}
++
++const topUsers: IUserTop[] = [
++    {
++        user: { id: 1, name: 'John Doe', email: 'john@example.com', roles: ['admin'], courseIds: [101, 102] },
++        allTimeScore: 1000,
++    },
++    {
++        user: { id: 2, name: 'Jane Smith', email: 'jane@example.com', roles: ['user'], courseIds: [103] },
++        allTimeScore: 850,
++    },
++    // Добавьте больше юзеров здесь
++]
++
++const theme = createTheme({
++    palette: {
++        primary: teal,
++        secondary: amber,
++    },
++})
++
++const UserTopPage: React.FC = () => {
++    return (
++        <ThemeProvider theme={theme}>
++            <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center">
++                <Typography variant="h4" className="text-teal-600 font-bold mb-6">Top Users</Typography>
++                <div className="w-full max-w-3xl space-y-6">
++                    {topUsers.map((topUser) => (
++                        <Card key={topUser.user.id} className="hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300">
++                            <CardContent>
++                                <Typography variant="h5" component="div" className="text-teal-800 font-semibold">
++                                    {topUser.user.name}
++                                </Typography>
++                                <Typography variant="body1" color="textSecondary" className="mt-2">
++                                    Email: {topUser.user.email}
++                                </Typography>
++                                <Typography variant="body1" color="textSecondary" className="mt-1">
++                                    Roles: {topUser.user.roles.join(', ')}
++                                </Typography>
++                                <Typography variant="body1" color="textSecondary" className="mt-1">
++                                    Courses: {topUser.user.courseIds.join(', ')}
++                                </Typography>
++                                <Typography variant="body1" color="textSecondary" className="mt-1">
++                                    All Time Score: {topUser.allTimeScore}
++                                </Typography>
++                            </CardContent>
++                        </Card>
++                    ))}
++                </div>
++            </div>
++        </ThemeProvider>
++    )
++}
++
++export default UserTopPage
+Index: src/services/score-top.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/services/score-top.service.ts b/src/services/score-top.service.ts
+new file mode 100644
+--- /dev/null	(date 1717337795142)
++++ b/src/services/score-top.service.ts	(date 1717337795142)
+@@ -0,0 +1,11 @@
++import {axiosWithAuth} from "../api/interceptors";
++import {IUserTop} from "../types/auth.types";
++
++export const topService = {
++    async getTop20() {
++        const response = await axiosWithAuth.get<IUserTop>('/score/top')
++
++        return response.data
++    },
++
++}
+\ No newline at end of file
