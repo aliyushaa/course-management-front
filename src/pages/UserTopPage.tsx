@@ -6,6 +6,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles'
 import {amber, teal} from '@mui/material/colors'
 import {IUserTop} from "../types/auth.types";
 import {topService} from "../services/score-top.service";
+import styles from './UserTopPage.module.css';
 
 const theme = createTheme({
     palette: {
@@ -31,31 +32,56 @@ const UserTopPage: React.FC = () => {
     }, [])
 
     return (
-        <ThemeProvider theme={theme}>
-            <div className="mt-16 min-h-screen bg-gray-50 p-6 flex flex-col items-center">
-                <Typography variant="h4" className="text-teal-600 font-bold">Top students</Typography>
-                {topUsers &&
-                    <div className="w-full max-w-3xl space-y-6 mt-6">
-                        {topUsers!.map((topUser) => (
-                            <Card key={topUser.user.id}
-                                  className="hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                                <CardContent>
-                                    <Typography variant="h5" component="div" className="text-teal-800 font-semibold">
-                                        {topUser.user.name}
-                                    </Typography>
-                                    <Typography variant="body1" color="textSecondary" className="mt-1">
-                                        Taken courses: {topUser.user.courseIds.length}
-                                    </Typography>
-                                    <Typography variant="body1" color="textSecondary" className="mt-1">
-                                        All time score: {topUser.allTimeScore}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        ))}
+        <div className={styles.container}>
+            <div className={styles.topLeadersList}>
+                {topUsers && topUsers.map((top, index) => (
+                    <div className={styles.leader} key={top.user.id}>
+                        {index + 1 <= 3 && (
+                            <div className={styles.containerImage}>
+                                <img className={styles.image} loading="lazy" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR6_ZZIo8iKJrKexYoj2DDk4iWDlESeUbdMerRUt_A-4_iuwFza" />
+                                <div className={styles.crown}>
+                                    <svg
+                                        id="crown1"
+                                        fill="#0f74b5"
+                                        data-name="Layer 1"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 100 50"
+                                    >
+                                        <polygon
+                                            className="cls-1"
+                                            points="12.7 50 87.5 50 100 0 75 25 50 0 25.6 25 0 0 12.7 50"
+                                        />
+                                    </svg>
+                                </div>
+                                <div className={styles.leaderName}>{top.user.name}</div>
+                            </div>
+                        )}
                     </div>
-                }
+                ))}
             </div>
-        </ThemeProvider>
+
+            <div className={styles.playerslist}>
+                <div className={styles.table}>
+                    <div>#</div>
+                    <div>Name</div>
+                    <div>Taken courses</div>
+                    <div>All time score</div>
+                </div>
+                <div className={styles.list}>
+                    {topUsers && topUsers.map((top, index) => (
+                        <div className={styles.player} key={top.user.id}>
+                            <span> {index + 1}</span>
+                            <div className={styles.user}>
+                                <img className={styles.image} src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR6_ZZIo8iKJrKexYoj2DDk4iWDlESeUbdMerRUt_A-4_iuwFza"/>
+                                <span> {top.user.name} </span>
+                            </div>
+                            <span> {top.user.courseIds.length} </span>
+                            <span> {top.allTimeScore} </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
     )
 }
 

@@ -2,7 +2,6 @@ import React, {useContext} from 'react'
 import {SubmitHandler, useForm} from "react-hook-form";
 import {IAuthForm} from "../types/auth.types";
 import {authService} from "../services/auth.service";
-import styles from './login.module.css'
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "../config/pages-url.config";
 import {Context} from "../index";
