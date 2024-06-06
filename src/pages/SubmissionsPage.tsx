@@ -8,9 +8,9 @@ import {containsRole} from "../App"
 import {UserRoles} from "../types/auth.types"
 import {submissionService} from "../services/submission.service"
 import {getUser} from "../services/auth-token.services"
-import {useForm} from "react-hook-form";
-import {FaEdit} from "react-icons/fa";
-import {GradeForm} from "../components/submission/GradeForm";
+import {useForm} from "react-hook-form"
+import {FaEdit} from "react-icons/fa"
+import {GradeForm} from "../components/submission/GradeForm"
 
 interface LocationState {
     course: ICourseResponse
@@ -25,7 +25,7 @@ export function SubmissionsPage() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([])
     const [found, setFound] = useState(false)
     const [isTimeUp, setIsTimeUp] = useState(false)
-    const [gradeFormIsOpened, setGradeFormIsOpened] = useState(false)
+    const [gradeFormIsOpened, setGradeFormIsOpened] = useState<{ [submissionId: number]: boolean }>({})
 
     const params = useParams<{ boxId: string }>()
     const location = useLocation()
@@ -35,6 +35,13 @@ export function SubmissionsPage() {
     const {register, handleSubmit, formState: {errors}, reset} = useForm<ICreateSubmission>({
         mode: 'onChange'
     })
+
+    const toggleGradeForm = (submissionId: number) => {
+        setGradeFormIsOpened(prevState => ({
+            ...prevState,
+            [submissionId]: !prevState[submissionId]
+        }))
+    }
 
     const onSubmit = async (data: ICreateSubmission) => {
         try {
@@ -140,7 +147,7 @@ export function SubmissionsPage() {
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files
         if (files) {
-            const fileArray = Array.from(files);
+            const fileArray = Array.from(files)
             const fileNames = Array.from(files).map(file => file.name)
             setSelectedFileNames(fileNames)
             setSelectedFiles(fileArray)
@@ -268,10 +275,12 @@ export function SubmissionsPage() {
                                                         Grading status: not graded
                                                     </p>
                                                     <FaEdit
-                                                        onClick={() => setGradeFormIsOpened(prevState => !prevState)}
+                                                        onClick={() => toggleGradeForm(submission.id)}
                                                         className="size-5 text-red-500 cursor-pointer hover:text-red-600"/>
                                                 </div>
-                                                {gradeFormIsOpened && <GradeForm submissionId={submission.id}/>}
+                                                {gradeFormIsOpened[submission.id] &&
+                                                    <GradeForm submissionId={submission.id}/>
+                                                }
                                             </>
                                             :
                                             // WITHOUT GRADE
@@ -282,7 +291,7 @@ export function SubmissionsPage() {
                                                         Grade: {submission.grade.grade}
                                                     </p>
                                                     <FaEdit
-                                                        onClick={() => setGradeFormIsOpened(prevState => !prevState)}
+                                                        onClick={() => toggleGradeForm(submission.id)}
                                                         className="size-5 text-red-500 cursor-pointer hover:text-red-600"/>
                                                 </div>
 
@@ -292,8 +301,9 @@ export function SubmissionsPage() {
                                                     </p>
                                                 }
 
-                                                {gradeFormIsOpened && <GradeForm submissionId={submission.id}
-                                                                                 grade={submission.grade}/>}
+                                                {gradeFormIsOpened[submission.id] &&
+                                                    <GradeForm submissionId={submission.id} grade={submission.grade}/>
+                                                }
                                             </>
                                         }
                                     </div>

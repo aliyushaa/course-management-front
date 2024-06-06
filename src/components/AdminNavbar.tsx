@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Link} from "react-router-dom";
 import {ROUTES} from "../config/pages-url.config";
 import SidebarElement from "./sidebars/SidebarElement";
-import {FaGraduationCap} from "react-icons/fa6";
+import {FaBagShopping, FaGraduationCap} from "react-icons/fa6";
 import {FaTrophy, FaUser} from "react-icons/fa";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
@@ -27,6 +27,8 @@ const AdminNavbar: React.FC<AdminSidebarProps> = ({logout}) => {
                                     icon={<FaUser className="ml-6 mr-2 size-5"/>}/>
                     <SidebarElement route={ROUTES.TOP} value={'Top students'}
                                     icon={<FaTrophy className="ml-6 mr-2 size-5"/>}/>
+                    <SidebarElement route={ROUTES.SHOP_PAGE} value={'Shop'}
+                                    icon={<FaBagShopping className="ml-6 mr-2 size-5"/>}/>
                 </div>
 
                 {context.store.isAuth
