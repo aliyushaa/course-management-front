@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
-import {createTheme, ThemeProvider} from '@mui/material/styles'
+import {createTheme} from '@mui/material/styles'
 import {amber, teal} from '@mui/material/colors'
 import {IUserTop} from "../types/auth.types";
 import {topService} from "../services/score-top.service";
