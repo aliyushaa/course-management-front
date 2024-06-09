@@ -15,7 +15,7 @@ interface StudentNavbarProps {
 const StudentNavbar: React.FC<StudentNavbarProps> = ({logout}) => {
     const context = useContext(Context)
     return (
-        <nav className="bg-gray-800 py-4 fixed top-0 w-screen z-10">
+        <nav className="bg-blue-600 py-4 fixed top-0 w-screen z-10">
             <div className="container mx-auto px-4 flex justify-between items-center">
                 <div className="flex items-center">
                     <Link to={ROUTES.HOME}>
