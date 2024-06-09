@@ -17,6 +17,7 @@ import UserManagementPage from "./pages/admin/UserManagementPage";
 import {SubmissionsPage} from "./pages/SubmissionsPage";
 import UserTopPage from "./pages/UserTopPage";
 import ShopPage from "./pages/ShopPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const unsecuredRoutes = [ROUTES.HOME, ROUTES.LOGIN]
 const adminRoutes = [ROUTES.COURSE_MANAGEMENT]
@@ -66,6 +67,7 @@ export default observer(function App() {
                     <Route path={ROUTES.COURSE_PAGE_WITH_PARAM} element={<CoursePage/>}/>
                     <Route path={ROUTES.SUBMISSIONS_PAGE + '/:boxId'} element={<SubmissionsPage/>}/>
                     <Route path={ROUTES.SHOP_PAGE} element={<ShopPage/>}/>
+                    <Route path={ROUTES.PROFILE} element={<ProfilePage/>}/>
 
                     <Route path={ROUTES.COURSE_MANAGEMENT} element={<CourseManagementPage/>}/>
                     <Route path={ROUTES.USER_MANAGEMENT} element={<UserManagementPage/>}/>

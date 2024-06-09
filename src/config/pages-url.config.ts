@@ -11,6 +11,7 @@ class ROUTE {
     COURSE_PAGE_WITH_PARAM = `${this.root}/course/:courseId`
     SUBMISSIONS_PAGE = `${this.root}/submissions`
     SHOP_PAGE = `${this.root}/shop`
+    PROFILE = `${this.root}/profile`;
 
     COURSE_MANAGEMENT = `${this.root}/course-management`
     USER_MANAGEMENT = `${this.root}/user-management`
