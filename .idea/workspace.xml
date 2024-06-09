@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/user/UpdateProfile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/ProfilePage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/interceptors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/interceptors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AdminNavbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminNavbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/pages-url.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/pages-url.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +97,12 @@
       <workItem from="1717607927573" duration="7390000" />
       <workItem from="1717659606681" duration="280000" />
       <workItem from="1717665720113" duration="441000" />
+      <workItem from="1717792911619" duration="1420000" />
+      <workItem from="1717821835525" duration="1802000" />
+      <workItem from="1717843730886" duration="2832000" />
+      <workItem from="1717873691346" duration="6026000" />
+      <workItem from="1717919902451" duration="1229000" />
+      <workItem from="1717924927955" duration="601000" />
     </task>
     <servers />
   </component>
