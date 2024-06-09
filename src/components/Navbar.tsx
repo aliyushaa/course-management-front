@@ -28,6 +28,7 @@ export default observer(function Navbar() {
         context.store.setUser({} as IUser)
         Cookies.remove('user');
         navigate(ROUTES.HOME)
+        window.location.reload()
     }
 
     if (containsRole(UserRoles.ADMIN)) {

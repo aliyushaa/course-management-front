@@ -1,3 +1,8 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
+
+
 .list::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     background-color: #E0E0E0;
@@ -67,7 +72,7 @@
     content: '1';
     width: 30px;
     height: 30px;
-    background: #ffc500;
+    background: #DFFF00;
     border-radius: 50%;
     position: absolute;
     right: 0;
@@ -75,7 +80,7 @@
     text-align: center;
     line-height: 30px;
     font-weight: 700;
-    box-shadow: 1px 1px 4px black;
+    box-shadow: 1px 1px 4px blue;
 }
 
 .container .topLeadersList .leader:nth-child(1) .image {
@@ -88,7 +93,7 @@
 }
 
 .container .topLeadersList .leader:nth-child(1) .crown svg {
-    fill: #ffc500;
+    fill: #DFFF00;
 }
 
 .container .topLeadersList .leader:nth-child(2) {
@@ -103,7 +108,7 @@
     content: '2';
     width: 30px;
     height: 30px;
-    background: #d4d4d4;
+    background: #FFFF00;
     border-radius: 50%;
     position: absolute;
     right: 0;
@@ -111,7 +116,7 @@
     text-align: center;
     line-height: 30px;
     font-weight: 700;
-    box-shadow: 1px 1px 4px black;
+    box-shadow: 1px 1px 4px blue;
 }
 
 .container .topLeadersList .leader:nth-child(2) .image {
@@ -124,7 +129,7 @@
 }
 
 .container .topLeadersList .leader:nth-child(2) .crown svg {
-    fill: #d4d4d4;
+    fill: #FFFF00;
 }
 
 .container .topLeadersList .leader:nth-child(3) {
@@ -139,7 +144,7 @@
     content: '3';
     width: 30px;
     height: 30px;
-    background: #ab6528;
+    background: #FFAA1D;
     border-radius: 50%;
     position: absolute;
     right: 0;
@@ -147,7 +152,7 @@
     text-align: center;
     line-height: 30px;
     font-weight: 700;
-    box-shadow: 1px 1px 4px black;
+    box-shadow: 1px 1px 4px blue;
 }
 
 .container .topLeadersList .leader:nth-child(3) .image {
@@ -160,10 +165,11 @@
 }
 
 .container .topLeadersList .leader:nth-child(3) .crown svg {
-    fill: #ab6528;
+    fill: #FFAA1D;
 }
 
 .container .leaderName {
+    font-family: "Roboto Serif", serif;
     position: absolute;
     text-align: center;
     color: white;
@@ -173,7 +179,7 @@
 }
 
 .container .player {
-    background-color: #424242;
+    background-color: #003399;
     display: grid;
     grid-template-columns: 0.4fr 3fr 1fr 1fr;
     align-items: center;
@@ -215,7 +221,7 @@
 }
 
 .container .playerslist .player:nth-child(odd) {
-    background-color: #616161;
+    background-color: #6699FF;
     align-items: center;
 }
 
