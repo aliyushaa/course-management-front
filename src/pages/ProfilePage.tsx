@@ -3,9 +3,15 @@ import {IProfileResponse, userService} from "../services/user.service";
 import {FaGithub, FaInstagram, FaTelegram} from "react-icons/fa";
 import {CgWebsite} from "react-icons/cg";
 import NotFoundPage from "./NotFoundPage";
+import {Modal} from "../components/Modal";
+import {UpdateProfile} from "../components/user/UpdateProfile";
+import qrCode from './../components/Assests/qr-code.png'
+
+const TELEGRAM_BOT_URL = 'https://t.me/dip_course_bot'
 
 export default function ProfilePage() {
     const [user, setUser] = useState<IProfileResponse | null>(null)
+    const [updateModal, setUpdateModal] = useState(false)
 
     useEffect(() => {
         async function fetchStudents() {
@@ -101,10 +107,36 @@ export default function ProfilePage() {
                                     </div>
                                 </div>
                                 <div className="mt-4">
-                                    <a href="/edit"
+                                    <a onClick={() => setUpdateModal(true)}
                                        className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Edit</a>
+                                    {updateModal &&
+                                        <Modal title="Update profile" onClose={() => setUpdateModal(false)}>
+                                            <UpdateProfile onClose={() => setUpdateModal(false)} user={user}/>
+                                        </Modal>
+                                    }
                                 </div>
                             </div>
+
+                            <div className="bg-white shadow-md rounded-lg p-4 mt-4 text-center">
+                                <h5 className="font-semibold text-lg mb-2">Connect your Telegram to get
+                                    notifications</h5>
+                                <div className="flex flex-col items-center">
+                                    <img
+                                        src={qrCode}
+                                        alt="QR Code"
+                                        className="w-24 h-24 mb-2"
+                                    />
+                                    <a
+                                        href={TELEGRAM_BOT_URL}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-500 underline"
+                                    >
+                                        Connect to Telegram Bot
+                                    </a>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
