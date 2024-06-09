@@ -4,18 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="login">
-      <change afterPath="$PROJECT_DIR$/src/components/Assests/loading.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/CoursesListPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CoursesListPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginForm.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage.tsx" afterDir="false" />
+    <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="front">
       <change beforePath="$PROJECT_DIR$/src/pages/SubmissionsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SubmissionsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserTopPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserTopPage.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserTopPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserTopPage.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717931669805</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="front">
+      <option name="closed" value="true" />
+      <created>1717949682021</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717949682021</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,6 +166,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="login" />
-    <option name="LAST_COMMIT_MESSAGE" value="login" />
+    <MESSAGE value="front" />
+    <option name="LAST_COMMIT_MESSAGE" value="front" />
   </component>
 </project>

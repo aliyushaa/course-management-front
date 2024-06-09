@@ -384,7 +384,7 @@ export function SubmissionsPage() {
                     <>
                         {
                             fileUploading &&
-               0             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                                 <img src={loadingGif} alt="Loading" className="w-60 h-60"/>
                             </div>
                         }
