@@ -27,7 +27,7 @@ export default observer(function CoursesListPage() {
 
     return (
         <div className="h-screen mt-20 px-52">
-            {courses.length > 0 && <h1 className="font-bold text-center text-3xl">My courses</h1>}
+            {courses.length > 0 && <h1 className="font-bold text-center text-3xl">Your courses list : </h1>}
             {courses.map(course => <Course key={course.id} course={course} editMode={false}/>)}
 
             {courses.length == 0 &&

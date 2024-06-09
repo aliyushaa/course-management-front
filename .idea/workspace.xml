@@ -4,17 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Assests/back.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/LoginForm.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_02_06_2024_19_40__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_02_06_2024_19_40__Changes_.xml" afterDir="false" />
+    <list default="true" id="717b9c85-5d54-436c-8844-13f6f1faa304" name="Changes" comment="login">
+      <change afterPath="$PROJECT_DIR$/src/components/Assests/loading.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AdminNavbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminNavbar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/StudentNavbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/StudentNavbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TeacherNavbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TeacherNavbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/CoursesListPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CoursesListPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/LoginForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginForm.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/SubmissionsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SubmissionsPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/UserTopPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserTopPage.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/UserTopPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserTopPage.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +61,11 @@
     "ts.external.directory.path": "C:\\diploma-front\\node_modules\\typescript\\lib"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\diploma-front\src\components\Assests" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -105,6 +111,23 @@
       <workItem from="1717659606681" duration="280000" />
       <workItem from="1717665720113" duration="441000" />
     </task>
+    <task id="LOCAL-00001" summary="login">
+      <option name="closed" value="true" />
+      <created>1717931543166</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1717931543166</updated>
+    </task>
+    <task id="LOCAL-00002" summary="login">
+      <option name="closed" value="true" />
+      <created>1717931669805</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1717931669805</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,5 +165,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="login" />
+    <option name="LAST_COMMIT_MESSAGE" value="login" />
   </component>
 </project>

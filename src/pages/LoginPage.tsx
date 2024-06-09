@@ -30,6 +30,7 @@ export default observer(function LoginPage() {
             store.setUser(response.data.data.user)
 
             navigate(ROUTES.HOME)
+            window.location.reload();
         } catch (e) {
             console.log(e)
             toast.error(errorCatch(e), {

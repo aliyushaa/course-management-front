@@ -11,6 +11,7 @@ import {getUser} from "../services/auth-token.services"
 import {useForm} from "react-hook-form"
 import {FaEdit} from "react-icons/fa"
 import {GradeForm} from "../components/submission/GradeForm"
+import loadingGif from "../components/Assests/loading.gif"
 
 interface LocationState {
     course: ICourseResponse
@@ -26,6 +27,8 @@ export function SubmissionsPage() {
     const [found, setFound] = useState(false)
     const [isTimeUp, setIsTimeUp] = useState(false)
     const [gradeFormIsOpened, setGradeFormIsOpened] = useState<{ [submissionId: number]: boolean }>({})
+    const [fileUploading, setFileUploading] = useState<boolean>(false)
+
 
     const params = useParams<{ boxId: string }>()
     const location = useLocation()
@@ -45,6 +48,7 @@ export function SubmissionsPage() {
 
     const onSubmit = async (data: ICreateSubmission) => {
         try {
+           setFileUploading(true)
             data.fileIds = []
             if (params.boxId !== undefined) {
                 if (selectedFiles.length > 0) {
@@ -59,6 +63,7 @@ export function SubmissionsPage() {
             reset()
             window.location.reload()
         } catch (error) {
+            setFileUploading(false)
             console.error('Failed to create submission:', error)
         }
     }
@@ -377,6 +382,12 @@ export function SubmissionsPage() {
                 {studentSubmission == null ?
                     // IF USER DOES NOT HAVE SUBMISSION
                     <>
+                        {
+                            fileUploading &&
+               0             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                                <img src={loadingGif} alt="Loading" className="w-60 h-60"/>
+                            </div>
+                        }
                         <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6 mb-40 text-center">
                             <p className="text-xl font-bold mb-6">You have not submitted anything yet</p>
                             <form onSubmit={handleSubmit(onSubmit)}>
