@@ -108,8 +108,8 @@ export default function CoursePage() {
                     <p className="text-gray-600 mb-6">{course?.description}</p>
                     <hr/>
 
-                    {/* ADMIN PERMISSION */}
-                    {containsRole(UserRoles.ADMIN) && (
+                    {/* ADMIN/TEACHER/MODERATOR PERMISSION */}
+                    {(containsRole(UserRoles.ADMIN) || containsRole(UserRoles.TEACHER)) && (
                         <>
                             <button onClick={() => setCreateModuleModal(true)}
                                     className="border bg-gray-800 border-gray-800 text-white font-bold py-2 px-4 rounded m-4 hover:bg-white hover:text-gray-800">
@@ -145,7 +145,7 @@ export default function CoursePage() {
                             <div key={module.id} className="mb-8 bg-white shadow-md p-4 rounded-md">
                                 <h3 className="font-semibold mb-4">
 
-                                    {containsRole(UserRoles.ADMIN) ?
+                                    {(containsRole(UserRoles.ADMIN) || containsRole(UserRoles.TEACHER)) ?
                                         <div className="flex justify-between items-center">
                                             <div>{module.title}</div>
                                             <div>

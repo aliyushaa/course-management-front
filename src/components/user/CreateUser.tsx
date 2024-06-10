@@ -1,7 +1,8 @@
 import React from "react";
-import {ICreateUser} from "../../types/auth.types";
+import {ICreateUser, UserRoles} from "../../types/auth.types";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {userService} from "../../services/user.service";
+import {containsRole} from "../../App";
 
 interface CreateUserProps {
     onClose: () => void
@@ -10,6 +11,13 @@ interface CreateUserProps {
 export function CreateUser({onClose}: CreateUserProps) {
     const roles = [
         {display: 'Admin', value: 'ADMIN'},
+        {display: 'Moderator', value: 'MODERATOR'},
+        {display: 'Student', value: 'STUDENT'},
+        {display: 'Teacher', value: 'TEACHER'}
+    ];
+
+    const moderatorPermissionRoles = [
+        {display: 'Moderator', value: 'MODERATOR'},
         {display: 'Student', value: 'STUDENT'},
         {display: 'Teacher', value: 'TEACHER'}
     ];
@@ -75,9 +83,14 @@ export function CreateUser({onClose}: CreateUserProps) {
                 })}
             >
                 <option value="">Select a role</option>
-                {roles.map((role, index) => (
-                    <option key={index} value={role.value}>{role.display}</option>
-                ))}
+                {containsRole(UserRoles.ADMIN) ?
+                    roles.map((role, index) => (
+                        <option key={index} value={role.value}>{role.display}</option>
+                    )) :
+                    moderatorPermissionRoles.map((role, index) => (
+                        <option key={index} value={role.value}>{role.display}</option>
+                    ))
+                }
             </select>
             {errors.role?.message && (
                 <div className="text-red-600 text-sm">{errors.role.message}</div>

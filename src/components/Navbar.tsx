@@ -31,7 +31,7 @@ export default observer(function Navbar() {
         window.location.reload()
     }
 
-    if (containsRole(UserRoles.ADMIN)) {
+    if (containsRole(UserRoles.ADMIN) || containsRole(UserRoles.MODERATOR)) {
         return <AdminNavbar logout={logout}/>
     } else if (containsRole(UserRoles.TEACHER)) {
         return <TeacherNavbar logout={logout}/>

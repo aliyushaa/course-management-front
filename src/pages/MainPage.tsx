@@ -10,7 +10,7 @@ const MainPage: React.FC = () => {
             {user != null ?
                 <>
                     <h1 className="text-3xl font-semibold mb-4"
-                        style={{color: "blue"}}>{`Welcome to, ${user.name} - Your Gateway to Endless Learning Opportunities! `}</h1>
+                        style={{color: "blue"}}>{`Welcome, ${user.name} - Your Gateway to Endless Learning Opportunities! `}</h1>
 
                 </>
                 :
