@@ -32,7 +32,7 @@ const UserTopPage: React.FC = () => {
         <div className={styles.container}>
             <div className={styles.topLeadersList}>
                 {topUsers && topUsers.map((top, index) => (
-                    <div className={styles.leader} key={top.user.id}>0
+                    <div className={styles.leader} key={top.user.id}>
                         {index + 1 <= 3 && (
                             <div className={styles.containerImage}>
                                 <img className={styles.image} loading="lazy" src="https://www.schoolbadgesuk.co.uk/cdn/shop/products/SBUK115-36c_1024x1024.jpg?v=1655284628" />

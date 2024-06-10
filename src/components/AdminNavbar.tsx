@@ -32,8 +32,6 @@ const AdminNavbar: React.FC<AdminSidebarProps> = ({logout}) => {
                                     icon={<FaUser className="ml-6 mr-2 size-5"/>}/>
                     <SidebarElement route={ROUTES.TOP} value={'Top students'}
                                     icon={<FaTrophy className="ml-6 mr-2 size-5"/>}/>
-                    <SidebarElement route={ROUTES.SHOP_PAGE} value={'Shop'}
-                                    icon={<FaBagShopping className="ml-6 mr-2 size-5"/>}/>
                 </div>
 
                 {context.store.isAuth ? (
