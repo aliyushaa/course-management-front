@@ -2,7 +2,7 @@ import axios, {CreateAxiosDefaults} from "axios";
 import {getAccessToken} from "../services/auth-token.services";
 
 const options: CreateAxiosDefaults = {
-    baseURL: 'http://localhost:8080/api',
+    baseURL: `${process.env.REACT_APP_SERVER_URL}/api`,
     headers: {
         'Content-Type': 'application/json'
     }
